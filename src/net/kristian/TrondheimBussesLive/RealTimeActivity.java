@@ -87,24 +87,23 @@ public class RealTimeActivity extends ListActivity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {   
 			ViewHolder holder = null;
-			TextView title = null;
-			TextView detail = null;
-
-			BusDeparture departure = getItem(position);
-			if(null == convertView){
+			if (null == convertView){
 				LayoutInflater mInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 				convertView = mInflater.inflate(R.layout.list_busdeparture_item, null);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			}
-
-			String titleText = departure.getLine();
-			String detailText = departure.getTime();
+			
+            BusDeparture departure = getItem(position);
+			
 			holder = (ViewHolder) convertView.getTag();
-			title = holder.getTitle();
-			title.setText(titleText);
-			detail = holder.getDetail();
-			detail.setText(detailText);
+			TextView line = holder.getLine();
+			String lineText = departure.getLine();
+			line.setText(lineText);
+			
+			TextView departureTime = holder.getDepartureTime();
+			String detailText = departure.getTime();
+			departureTime.setText(detailText);
 
 			return convertView;
 		}
@@ -112,23 +111,23 @@ public class RealTimeActivity extends ListActivity {
 		
 		private class ViewHolder {
 			private View mRow;
-			private TextView title = null;
-			private TextView detail = null;
+			private TextView line = null;
+			private TextView departureTime = null;
 
 			public ViewHolder(View row) {
 				mRow = row;
 			}
-			public TextView getTitle() {
-				if(null == title){
-					title = (TextView) mRow.findViewById(R.id.title);
+			public TextView getLine() {
+				if(null == line){
+					line = (TextView) mRow.findViewById(R.id.line);
 				}
-				return title;
+				return line;
 			}     
-			public TextView getDetail() {
-				if(null == detail){
-					detail = (TextView) mRow.findViewById(R.id.detail);
+			public TextView getDepartureTime() {
+				if(null == departureTime){
+					departureTime = (TextView) mRow.findViewById(R.id.departuretime);
 				}
-				return detail;
+				return departureTime;
 			}
 		}
 	} 
@@ -221,7 +220,7 @@ public class RealTimeActivity extends ListActivity {
 		/** The system calls this to perform work in the UI thread and delivers
 		 * the result from doInBackground() */
 		protected void onPostExecute(List<BusDeparture> forecasts) {
-			setListAdapter(new CustomAdapter(myActivity_.getBaseContext(), R.layout.list_busdeparture_item, R.id.title, forecasts));
+			setListAdapter(new CustomAdapter(myActivity_.getBaseContext(), R.layout.list_busdeparture_item, R.id.line, forecasts));
 		}
 	}
 }
