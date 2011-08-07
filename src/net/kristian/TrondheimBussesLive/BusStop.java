@@ -23,4 +23,9 @@ public class BusStop {
 	public int getCode() {
 		return code_;
 	}
+	
+	public String toString() {
+		return name_;
+	}
+	
 }
