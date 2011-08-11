@@ -4,6 +4,7 @@ public class BusStop {
 	private String name_;
 	private String id_;
 	private int code_;
+	private Position position_ = null;
 	
 	public BusStop(String name, String id, int code) {
 		name_ = name;
@@ -28,4 +29,11 @@ public class BusStop {
 		return name_;
 	}
 	
+	public Position getPosition() {
+		return position_;
+	}
+
+	public void setPosition(Position position) {
+		position_ = position;
+	}
 }
