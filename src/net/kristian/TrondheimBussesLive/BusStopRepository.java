@@ -30,9 +30,16 @@ public class BusStopRepository {
 			
 		return busStops;
 	}
-//	
-//	public BusStop getByCode(int code) {	
-//		List<BusStop> busStops = getAll();
-//		for ()
-//	}
+
+	public List<BusStop> getByCode(ArrayList<Integer> favorites) {
+		// TODO Auto-generated method stub
+		List<BusStop> allBusStops = getAll();
+		List<BusStop> filteredBusStops = new ArrayList<BusStop>();
+		for (BusStop busStop : allBusStops) {
+			if (favorites.contains(busStop.getCode()))
+				filteredBusStops.add(busStop);					
+		}
+		
+		return filteredBusStops;
+	}
 }

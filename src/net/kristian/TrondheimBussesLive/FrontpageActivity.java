@@ -1,5 +1,6 @@
 package net.kristian.TrondheimBussesLive;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -23,7 +24,10 @@ public class FrontpageActivity extends ListActivity {
 		lv.setTextFilterEnabled(true);
 
 		BusStopRepository repo = new BusStopRepository();
-		List<BusStop> busStops = repo.getAll();
+		ArrayList<Integer> favorites = new ArrayList<Integer>();
+		favorites.add(100948); 
+		favorites.add(100346);
+		List<BusStop> busStops = repo.getByCode(favorites);
 		
 		setListAdapter(new BusStopAdapter(getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops));
 
