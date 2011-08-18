@@ -7,10 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class FindBusStopByNameActivity extends ListActivity {
@@ -50,8 +56,30 @@ public class FindBusStopByNameActivity extends ListActivity {
 				startActivity(intent);
 			}
 		});
+		registerForContextMenu(lv);
 	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenuInfo menuInfo) {
+	  super.onCreateContextMenu(menu, v, menuInfo);
+	  MenuInflater inflater = getMenuInflater();
+	  inflater.inflate(R.menu.busstopmenu, menu);
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+	  //AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	  switch (item.getItemId()) {
+	  case R.id.add_favorite:
+	    //editNote(info.id);
+		Toast.makeText(this, "You pressed the add fav button! Not implemented yet..", Toast.LENGTH_LONG).show();
+		return true;
+	  default:
+	    return super.onContextItemSelected(item);
+	  }
+	}
+	
 	@Override
 	protected void onDestroy() {
 	    super.onDestroy();
