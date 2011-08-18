@@ -31,7 +31,7 @@ public class BusStopRepository {
 		return busStops;
 	}
 
-	public List<BusStop> getByCode(ArrayList<Integer> favorites) {
+	public List<BusStop> getByCode(List<Integer> favorites) {
 		// TODO Auto-generated method stub
 		List<BusStop> allBusStops = getAll();
 		List<BusStop> filteredBusStops = new ArrayList<BusStop>();

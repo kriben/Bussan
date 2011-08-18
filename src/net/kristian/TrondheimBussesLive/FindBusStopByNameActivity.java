@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,7 @@ public class FindBusStopByNameActivity extends ListActivity {
 	
 	private EditText filterText = null;
 	BusStopAdapter adapter = null;
+	List<BusStop> busStops = null;	
 	
 	private TextWatcher filterTextWatcher = new TextWatcher() {
 	    public void afterTextChanged(Editable s) {}
@@ -31,6 +33,7 @@ public class FindBusStopByNameActivity extends ListActivity {
 
 	    public void onTextChanged(CharSequence s, int start, int before, int count) {
 	        adapter.getFilter().filter(s);
+	        adapter.notifyDataSetChanged();
 	    }
 	};
 	
@@ -43,7 +46,7 @@ public class FindBusStopByNameActivity extends ListActivity {
 		filterText.addTextChangedListener(filterTextWatcher);
 
 		
-		List<BusStop> busStops = new BusStopRepository().getAll();
+		busStops = new BusStopRepository().getAll();
 		adapter = new BusStopAdapter(getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops);
 		setListAdapter(adapter);
 		
@@ -69,11 +72,19 @@ public class FindBusStopByNameActivity extends ListActivity {
 	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-	  //AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	  AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	  BusStop busStop = adapter.getItem(info.position);
 	  switch (item.getItemId()) {
 	  case R.id.add_favorite:
-	    //editNote(info.id);
-		Toast.makeText(this, "You pressed the add fav button! Not implemented yet..", Toast.LENGTH_LONG).show();
+		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
+		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
+		favorites.add(busStop.getCode());
+		
+		SharedPreferences.Editor prefEditor = settings.edit();  
+		prefEditor.putString("favorites", PreferencesUtil.encodeBusStopString(favorites));  
+		prefEditor.commit(); 
+		
+		Toast.makeText(this, "Added " + busStop.getName() + " to favorites.", Toast.LENGTH_LONG).show();
 		return true;
 	  default:
 	    return super.onContextItemSelected(item);
