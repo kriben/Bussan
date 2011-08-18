@@ -1,6 +1,5 @@
 package net.kristian.TrondheimBussesLive;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -38,13 +37,7 @@ public class FindBusStopByNameActivity extends ListActivity {
 		filterText.addTextChangedListener(filterTextWatcher);
 
 		
-		List<BusStop> busStops = new ArrayList<BusStop>();
-		busStops.add(new BusStop("Johan Falkbergets Vei (mot byen)", "1205", 100948));
-		busStops.add(new BusStop("Nyborg (mot byen)", "1334", 100077));
-		busStops.add(new BusStop("Rotvoll (mot byen)", "1410", 100346));
-		busStops.add(new BusStop("Studentersamfundet (mot byen)", "", 100575));
-		busStops.add(new BusStop("Gildheim (mot byen)", "1147", 100730));
-		
+		List<BusStop> busStops = new BusStopRepository().getAll();
 		adapter = new BusStopAdapter(getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops);
 		setListAdapter(adapter);
 		

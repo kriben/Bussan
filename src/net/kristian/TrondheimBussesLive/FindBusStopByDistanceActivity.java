@@ -23,23 +23,8 @@ import android.widget.TextView;
 public class FindBusStopByDistanceActivity extends ListActivity {
 
 	private List<BusStop> getBusStops() {
-
-		List<BusStop> busStops = new ArrayList<BusStop>();
-		BusStop b1 = new BusStop("Johan Falkbergets Vei (mot byen)", "1205", 100948);
-		b1.setPosition(new Position(63.4112661956096, 10.3610008566504));
-		busStops.add(b1);
-
-		BusStop b2 = new BusStop("Rotvoll (mot byen)", "1410", 100346);
-		b2.setPosition(new Position(63.4348615179189, 10.4834235414732));
-		busStops.add(b2);
-
-		BusStop b3 = new BusStop("Nyborg (mot byen)", "1334", 100077);
-		b3.setPosition(new Position(63.4132182510428, 10.3517844247305));
-		busStops.add(b3);
-		//busStops.add(new BusStop("Rotvoll (mot byen)", "1410", 100346));
-		//busStops.add(new BusStop("Studentersamfundet (mot byen)", "", 100575));
-		//busStops.add(new BusStop("Gildheim (mot byen)", "1147", 100730));
-		return busStops;
+		BusStopRepository repo = new BusStopRepository();
+		return repo.getAll();
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
