@@ -5,7 +5,6 @@ import java.util.List;
 import java.lang.Integer;
 
 
-
 public class PreferencesUtil {
 	public static List<Integer> decodeBusStopString(String string) {
 		ArrayList<Integer> favorites = new ArrayList<Integer>();

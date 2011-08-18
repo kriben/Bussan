@@ -22,13 +22,7 @@ public class FrontpageActivity extends ListActivity {
 
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-
-        BusStopRepository repo = new BusStopRepository();
-		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
-		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
-		List<BusStop> busStops = repo.getByCode(favorites);		
-		setListAdapter(new BusStopAdapter(getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops));
-
+		
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				BusStop busStop = (BusStop) parent.getAdapter().getItem(position);
@@ -39,6 +33,18 @@ public class FrontpageActivity extends ListActivity {
 		});
 	}
 
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+        BusStopRepository repo = new BusStopRepository();
+		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
+		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
+		List<BusStop> busStops = repo.getByCode(favorites);		
+		setListAdapter(new BusStopAdapter(getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops));
+	}
+		
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){

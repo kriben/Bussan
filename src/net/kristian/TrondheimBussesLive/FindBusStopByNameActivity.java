@@ -66,6 +66,7 @@ public class FindBusStopByNameActivity extends ListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 	                                ContextMenuInfo menuInfo) {
 	  super.onCreateContextMenu(menu, v, menuInfo);
+	  menu.setHeaderTitle("Favorite"); // TODO: get the name of the bus stop here
 	  MenuInflater inflater = getMenuInflater();
 	  inflater.inflate(R.menu.busstopmenu, menu);
 	}
