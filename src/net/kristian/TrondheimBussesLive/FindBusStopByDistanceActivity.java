@@ -1,10 +1,10 @@
 package net.kristian.TrondheimBussesLive;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,6 +27,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 		return repo.getAll();
 	}
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	//	setContentView(R.layout.list_busstopwithdistance_item);
@@ -37,6 +38,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 
 		// Define a listener that responds to location updates
 		LocationListener locationListener = new LocationListener() {
+			@Override
 			public void onLocationChanged(android.location.Location location) {
 				// Called when a new location is found by the network location provider.
 				System.out.println("GOT update: ");
@@ -46,10 +48,13 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 				new FindClosestTask(FindBusStopByDistanceActivity.this, busStops).execute(position);
 			}
 
+			@Override
 			public void onStatusChanged(String provider, int status, Bundle extras) {}
 
+			@Override
 			public void onProviderEnabled(String provider) {}
 
+			@Override
 			public void onProviderDisabled(String provider) {}
 
 		};
@@ -74,7 +79,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {   
 
 			BusStopWithDistance busStop = getItem(position);
-			LayoutInflater mInflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater mInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = mInflater.inflate(R.layout.list_busstopwithdistance_item, null);
 			ViewHolder holder = new ViewHolder(convertView);
 			convertView.setTag(holder);
@@ -83,12 +88,26 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 			TextView title = holder.getTitle();
 			title.setText(busStop.getBusStop().getName());
 
-			TextView distance = holder.getDistance();
-			distance.setText(busStop.getDistance() + " km");	
+			TextView distanceView = holder.getDistance();
+			
+			String distanceString = constructDistanceString(busStop.getDistance());
+			distanceView.setText(distanceString);	
 			
 			return convertView;
 		}
 
+		private String constructDistanceString(double distance) {
+			if (distance >= 1.0)		{
+				DecimalFormat df = new DecimalFormat("#.#");
+				return df.format(distance) + " km";	
+			}
+			else {
+				// Convert to meters for distances closer than 1 kilometer
+				DecimalFormat df = new DecimalFormat("#");
+				return df.format(distance * 1000.0) + " m";
+			}
+		}	
+		
 
 		private class ViewHolder {
 			private View mRow;
@@ -133,6 +152,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 
 		/** The system calls this to perform work in a worker thread and
 		 * delivers it the parameters given to AsyncTask.execute() */
+		@Override
 		protected ArrayList<BusStopWithDistance> doInBackground(Position ...positions) {
 
 			Position position = positions[0];
@@ -156,6 +176,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 		}
 
 
+		@Override
 		protected void onPreExecute()
 		{
 			if (progressDialog_ == null) {
@@ -165,6 +186,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 			}		
 		}
 
+		@Override
 		protected void onProgressUpdate(Integer... progress) 
 		{
 			progressDialog_.setProgress(progress[0]);
@@ -173,6 +195,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 
 		/** The system calls this to perform work in the UI thread and delivers
 		 * the result from doInBackground() */
+		@Override
 		protected void onPostExecute(ArrayList<BusStopWithDistance> locations) {
 			progressDialog_.dismiss();
 
