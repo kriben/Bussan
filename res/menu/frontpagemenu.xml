@@ -3,5 +3,4 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Find by name" android:titleCondensed="Find bus stops by name" android:id="@+id/find_by_name"></item>
     <item android:title="Find closest" android:titleCondensed="Closest" android:id="@+id/find_closest"></item>
-    <item android:title="Options" android:titleCondensed="Options" android:id="@+id/options"></item>
 </menu>
