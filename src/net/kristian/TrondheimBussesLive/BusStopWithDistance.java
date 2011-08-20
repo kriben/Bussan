@@ -1,5 +1,7 @@
 package net.kristian.TrondheimBussesLive;
 
+import no.kriben.busstopstrondheim.model.BusStop;
+
 public class BusStopWithDistance implements Comparable<BusStopWithDistance> {
     
 	private BusStop busStop_;

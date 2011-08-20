@@ -18,12 +18,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
+import no.kriben.busstopstrondheim.model.BusStop;
+import no.kriben.busstopstrondheim.model.Position;
+import no.kriben.busstopstrondheim.io.MockBusStopRepository;
+import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 public class FindBusStopByDistanceActivity extends ListActivity {
 
 	private List<BusStop> getBusStops() {
-		BusStopRepository repo = new BusStopRepository();
+		BusStopRepository repo = new MockBusStopRepository();
 		return repo.getAll();
 	}
 

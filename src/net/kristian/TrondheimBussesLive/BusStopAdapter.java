@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
+import no.kriben.busstopstrondheim.model.BusStop;
 
 public class BusStopAdapter extends ArrayAdapter<BusStop> {
 	public BusStopAdapter(Context context, 

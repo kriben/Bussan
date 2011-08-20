@@ -19,6 +19,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import no.kriben.busstopstrondheim.model.BusStop;
+import no.kriben.busstopstrondheim.io.MockBusStopRepository;
+
 
 public class FindBusStopByNameActivity extends ListActivity {
 	
@@ -46,7 +49,7 @@ public class FindBusStopByNameActivity extends ListActivity {
 		filterText.addTextChangedListener(filterTextWatcher);
 
 		
-		busStops = new BusStopRepository().getAll();
+		busStops = new MockBusStopRepository().getAll();
 		adapter = new BusStopAdapter(getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops);
 		setListAdapter(adapter);
 		

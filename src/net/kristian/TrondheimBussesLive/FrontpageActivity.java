@@ -13,7 +13,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
+import no.kriben.busstopstrondheim.model.BusStop;
+import no.kriben.busstopstrondheim.io.MockBusStopRepository;
+import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 public class FrontpageActivity extends ListActivity {
 	@Override
@@ -38,7 +40,7 @@ public class FrontpageActivity extends ListActivity {
 	public void onResume() {
 		super.onResume();
 		
-        BusStopRepository repo = new BusStopRepository();
+        BusStopRepository repo = new MockBusStopRepository();
 		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
 		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
 		List<BusStop> busStops = repo.getByCode(favorites);		
@@ -62,10 +64,11 @@ public class FrontpageActivity extends ListActivity {
 		case R.id.find_by_name:
 			startActivity(new Intent(FrontpageActivity.this, FindBusStopByNameActivity.class));
 			break;
-		case R.id.options: 
-			Toast.makeText(this, "You pressed the options button! Not implemented yet..", Toast.LENGTH_LONG).show();
-			break;
 		}
+		//case R.id.options: 
+		//	Toast.makeText(this, "You pressed the options button! Not implemented yet..", Toast.LENGTH_LONG).show();
+		//	break;
+		//}
 
 		return true;
 	}
