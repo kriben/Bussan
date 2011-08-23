@@ -19,6 +19,7 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> {
 		super(context, resource, textViewResourceId, objects);
 	}
 
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {   
 		
@@ -34,6 +35,7 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> {
 
 		return convertView;
 	}
+	
 	
 	private class ViewHolder {
 		private View mRow;

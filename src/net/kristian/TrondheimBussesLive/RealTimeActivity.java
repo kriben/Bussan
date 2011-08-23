@@ -8,6 +8,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -18,7 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusDeparture;
-import no.kriben.busstopstrondheim.io.UnofficalBusDepartureRepository;
+import no.kriben.busstopstrondheim.io.ItalianSoapBusDepartureRepository;
+
 
 public class RealTimeActivity extends ListActivity {
 
@@ -132,14 +134,17 @@ public class RealTimeActivity extends ListActivity {
 		/** The system calls this to perform work in a worker thread and
 		 * delivers it the parameters given to AsyncTask.execute() */
 		protected List<BusDeparture> doInBackground(Integer... codes) {
-		    List<BusDeparture> departures = new UnofficalBusDepartureRepository().getAllForBusStop(codes[0]); 
-			return departures;
+		    Resources res = getResources();
+		    String username = res.getString(R.string.username);
+		    String password = res.getString(R.string.password);
+		    List<BusDeparture> busDepartures = new ItalianSoapBusDepartureRepository(username, password).getAllForBusStop(codes[0]); 
+			return busDepartures;
 		}
 
 		/** The system calls this to perform work in the UI thread and delivers
 		 * the result from doInBackground() */
-		protected void onPostExecute(List<BusDeparture> forecasts) {
-			setListAdapter(new CustomAdapter(myActivity_.getBaseContext(), R.layout.list_busdeparture_item, R.id.line, forecasts));
+		protected void onPostExecute(List<BusDeparture> busDepartures) {
+			setListAdapter(new CustomAdapter(myActivity_.getBaseContext(), R.layout.list_busdeparture_item, R.id.line, busDepartures));
 		}
 	}
 }

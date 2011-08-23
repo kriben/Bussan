@@ -77,7 +77,6 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 		}
 
 
-
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {   
 

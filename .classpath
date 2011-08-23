@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="src" path="/BusStopsTrondheim"/>
+	<classpathentry kind="lib" path="/home/kristian/workspace/busstopstrondheim.jar"/>
+	<classpathentry kind="lib" path="/home/kristian/Downloads/ksoap2-android-assembly-2.5.7-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
