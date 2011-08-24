@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,7 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import no.kriben.busstopstrondheim.model.BusStop;
-import no.kriben.busstopstrondheim.io.ItalianSoapBusStopRepository;
+import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 
 public class FindBusStopByNameActivity extends ListActivity {
@@ -37,8 +36,10 @@ public class FindBusStopByNameActivity extends ListActivity {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            adapter.getFilter().filter(s);
-            adapter.notifyDataSetChanged();
+            if (adapter != null) {
+                adapter.getFilter().filter(s);
+                adapter.notifyDataSetChanged();
+            }
         }
     };
 
@@ -52,13 +53,6 @@ public class FindBusStopByNameActivity extends ListActivity {
 
         new DownloadBusStopTask(this).execute();
         
-        Resources res = getResources();
-        String username = res.getString(R.string.username);
-        String password = res.getString(R.string.password);
-        busStops = new ItalianSoapBusStopRepository(username, password).getAll();
-        adapter = new BusStopAdapter(getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops);
-        setListAdapter(adapter);
-
         ListView lv = getListView();
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -120,10 +114,8 @@ public class FindBusStopByNameActivity extends ListActivity {
         /** The system calls this to perform work in a worker thread and
          * delivers it the parameters given to AsyncTask.execute() */
         protected List<BusStop> doInBackground(Void... voids) {
-            Resources res = getResources();
-            String username = res.getString(R.string.username);
-            String password = res.getString(R.string.password);
-            List<BusStop> busStop = new ItalianSoapBusStopRepository(username, password).getAll(); 
+            BusStopRepository busStopRepository = ((SainntidApplication)getApplicationContext()).getBusStopRepository();
+            List<BusStop> busStop = busStopRepository.getAll(); 
             return busStop;
         }
 
@@ -135,5 +127,4 @@ public class FindBusStopByNameActivity extends ListActivity {
             setListAdapter(myActivity_.adapter);
         }
     }
-    
 }

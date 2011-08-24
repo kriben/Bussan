@@ -20,14 +20,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.model.Position;
-import no.kriben.busstopstrondheim.io.MockBusStopRepository;
 import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 public class FindBusStopByDistanceActivity extends ListActivity {
-
+    
 	private List<BusStop> getBusStops() {
-		BusStopRepository repo = new MockBusStopRepository();
-		return repo.getAll();
+		BusStopRepository busStopRepository = ((SainntidApplication)getApplicationContext()).getBusStopRepository();
+		return busStopRepository.getAll();
 	}
 
 	@Override
@@ -47,8 +46,10 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 				System.out.println("GOT update: ");
 				// Remove the listener you previously added
 				//locationManager.removeUpdates(this);
-				Position position = new Position(location.getLatitude(), location.getLongitude());
-				new FindClosestTask(FindBusStopByDistanceActivity.this, busStops).execute(position);
+				if (busStops != null) {
+				   Position position = new Position(location.getLatitude(), location.getLongitude());
+				   new FindClosestTask(FindBusStopByDistanceActivity.this, busStops).execute(position);
+				}
 			}
 
 			@Override
@@ -207,4 +208,4 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 			setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.id.busstopwithdistance_list, R.id.busstopwithdistance_name,locations));
 		}
 	}
-}
+}		

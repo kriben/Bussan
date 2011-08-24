@@ -8,7 +8,6 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,7 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusDeparture;
-import no.kriben.busstopstrondheim.io.ItalianSoapBusDepartureRepository;
+import no.kriben.busstopstrondheim.io.BusDepartureRepository;
+
 
 
 public class RealTimeActivity extends ListActivity {
@@ -32,9 +32,6 @@ public class RealTimeActivity extends ListActivity {
 		if (ConnectivityChecker.isOnline(this)) {
 			// do things if it there's network connection
 			ListView lv = getListView();
-			
-			//mRow.findViewById(R.id.busstop_name);
-			//lv.addHeaderView(v);
 			lv.setTextFilterEnabled(true);
 
 			Bundle extras = getIntent().getExtras();
@@ -134,10 +131,8 @@ public class RealTimeActivity extends ListActivity {
 		/** The system calls this to perform work in a worker thread and
 		 * delivers it the parameters given to AsyncTask.execute() */
 		protected List<BusDeparture> doInBackground(Integer... codes) {
-		    Resources res = getResources();
-		    String username = res.getString(R.string.username);
-		    String password = res.getString(R.string.password);
-		    List<BusDeparture> busDepartures = new ItalianSoapBusDepartureRepository(username, password).getAllForBusStop(codes[0]); 
+		    BusDepartureRepository busDepartureRepository = ((SainntidApplication)getApplicationContext()).getBusDepartureRepository();
+		    List<BusDeparture> busDepartures = busDepartureRepository.getAllForBusStop(codes[0]); 
 			return busDepartures;
 		}
 

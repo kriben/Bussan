@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import no.kriben.busstopstrondheim.model.BusStop;
-import no.kriben.busstopstrondheim.io.MockBusStopRepository;
 import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 public class FrontpageActivity extends ListActivity {
@@ -39,8 +38,7 @@ public class FrontpageActivity extends ListActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		
-        BusStopRepository repo = new MockBusStopRepository();
+		BusStopRepository repo = ((SainntidApplication)getApplicationContext()).getBusStopRepository();
 		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
 		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
 		List<BusStop> busStops = repo.getByCode(favorites);		
