@@ -8,12 +8,10 @@ import android.app.Application;
 import android.content.res.Resources;
 
 public class SainntidApplication extends Application {
-
     
     private BusStopRepository busStopRepository_ = null;
     private BusDepartureRepository busDepartureRepository_ = null;
-    
-    
+   
     public SainntidApplication() {
         super();
     }
@@ -24,6 +22,7 @@ public class SainntidApplication extends Application {
         String username = res.getString(R.string.username);
         String password = res.getString(R.string.password);
         busStopRepository_ = new ItalianSoapBusStopRepository(username, password);
+        busStopRepository_.setStringCache(new AndroidFileStringCache(this, "bustops.json"));
         busDepartureRepository_  = new ItalianSoapBusDepartureRepository(username, password);
     }
     
