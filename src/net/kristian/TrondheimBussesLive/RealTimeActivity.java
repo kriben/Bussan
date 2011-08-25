@@ -84,12 +84,13 @@ public class RealTimeActivity extends ListActivity {
 			
 			holder = (ViewHolder) convertView.getTag();
 			TextView line = holder.getLine();
-			String lineText = departure.getLine();
-			line.setText(lineText);
+			line.setText(departure.getLine());
+			
+			TextView destination = holder.getDestination();
+            destination.setText(departure.getDestination());
 			
 			TextView departureTime = holder.getDepartureTime();
-			String detailText = departure.getTime();
-			departureTime.setText(detailText);
+			departureTime.setText( departure.getTime());
 
 			return convertView;
 		}
@@ -98,6 +99,7 @@ public class RealTimeActivity extends ListActivity {
 		private class ViewHolder {
 			private View mRow;
 			private TextView line = null;
+			private TextView destination = null;
 			private TextView departureTime = null;
 
 			public ViewHolder(View row) {
@@ -109,6 +111,12 @@ public class RealTimeActivity extends ListActivity {
 				}
 				return line;
 			}     
+			public TextView getDestination() {
+                if(null == destination){
+                    destination = (TextView) mRow.findViewById(R.id.destination);
+                }
+                return destination;
+            }     
 			public TextView getDepartureTime() {
 				if(null == departureTime){
 					departureTime = (TextView) mRow.findViewById(R.id.departuretime);
