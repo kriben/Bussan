@@ -22,6 +22,6 @@ public class BusStopWithDistance implements Comparable<BusStopWithDistance> {
 	
 	@Override
 	public int compareTo(BusStopWithDistance another) {
-		return (int) (getDistance() - another.getDistance());
+		return Double.compare(getDistance(), another.getDistance());
 	}
 }
