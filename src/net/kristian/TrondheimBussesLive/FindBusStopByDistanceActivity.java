@@ -45,7 +45,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 				// Called when a new location is found by the network location provider.
 				System.out.println("GOT update: ");
 				// Remove the listener you previously added
-				//locationManager.removeUpdates(this);
+				locationManager.removeUpdates(this);
 				if (busStops != null) {
 				   Position position = new Position(location.getLatitude(), location.getLongitude());
 				   new FindClosestTask(FindBusStopByDistanceActivity.this, busStops).execute(position);
