@@ -31,26 +31,12 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> {
 			
 		holder = (ViewHolder) convertView.getTag();
 		TextView title = holder.getTitle();
-		
-		// TODO: refactor this mess
-		// Try to construct a direction string:
-		//   buses with id smaller than 1000 are going to town
-		//   less than equal 1000 is leaving town
-		//   larger than 2000 is unknown
-		String direction = "";
-		int id = new Integer(busStop.getId()).intValue();
-		if (id < 2000) {
-		    if (id < 1000) 
-		        direction = " (from town)";
-		    else 
-		        direction = " (to town)";
-		}
-		
-		title.setText(busStop.getName() + direction);
+		title.setText(BusStopNameFormatter.format(busStop));
 
 		return convertView;
 	}
-	
+
+
 	
 	private class ViewHolder {
 		private View mRow;

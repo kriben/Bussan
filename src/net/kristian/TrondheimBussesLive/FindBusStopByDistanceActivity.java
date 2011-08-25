@@ -89,7 +89,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 
 			holder = (ViewHolder) convertView.getTag();
 			TextView title = holder.getTitle();
-			title.setText(busStop.getBusStop().getName());
+			title.setText(BusStopNameFormatter.format(busStop.getBusStop()));
 
 			TextView distanceView = holder.getDistance();
 			
