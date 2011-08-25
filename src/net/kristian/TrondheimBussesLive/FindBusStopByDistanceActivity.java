@@ -201,10 +201,6 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 		@Override
 		protected void onPostExecute(ArrayList<BusStopWithDistance> locations) {
 			progressDialog_.dismiss();
-
-			for (BusStopWithDistance b: locations)
-				Log.d(TAG, "Bus Stop: " + b.getBusStop().toString() + " distance: " + b.getDistance());
-
 			setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.id.busstopwithdistance_list, R.id.busstopwithdistance_name,locations));
 		}
 	}
