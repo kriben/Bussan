@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Find by name" android:titleCondensed="Find by name" android:id="@+id/find_by_name"></item>
-    <item android:title="Find closest" android:titleCondensed="Find closest" android:id="@+id/find_closest"></item>
+    <item android:title="Find by name" android:icon="@drawable/ic_menu_search" android:titleCondensed="Find by name" android:id="@+id/find_by_name"></item>
+    <item android:title="Find closest"  android:icon="@drawable/ic_menu_mylocation" android:titleCondensed="Find closest" android:id="@+id/find_closest"></item>
 </menu>
