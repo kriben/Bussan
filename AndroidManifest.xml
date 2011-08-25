@@ -14,7 +14,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".RealTimeActivity" android:label="Bus depature info">
+		<activity android:name=".RealTimeActivity" android:label="Bussan: Bus stop">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
@@ -22,7 +22,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".FindBusStopByNameActivity"
-			android:label="Find bus stop by name">
+			android:label="Bussan: All bus stops">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
@@ -30,7 +30,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".FindBusStopByDistanceActivity"
-			android:label="Find bus stop by distance">
+			android:label="Bussan: Closest bus stops">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
