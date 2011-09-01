@@ -22,7 +22,7 @@ public class SainntidApplication extends Application {
         String username = res.getString(R.string.username);
         String password = res.getString(R.string.password);
         busStopRepository_ = new ItalianSoapBusStopRepository(username, password);
-        busStopRepository_.setStringCache(new AndroidFileStringCache(this, "bustops.json"));
+        busStopRepository_.setStringCache(new AndroidFileStringCache(this, "bustops2.json"));
         busDepartureRepository_  = new ItalianSoapBusDepartureRepository(username, password);
     }
     
