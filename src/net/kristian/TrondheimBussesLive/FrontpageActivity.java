@@ -8,10 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.io.BusStopRepository;
 
@@ -22,16 +19,6 @@ public class FrontpageActivity extends BusStopListActivity {
 
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-		registerForContextMenu(lv);
-		
-		lv.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				BusStop busStop = (BusStop) parent.getAdapter().getItem(position);
-				Intent intent = new Intent(view.getContext(), RealTimeActivity.class);
-				intent.putExtra("code", busStop.getCode());
-				startActivity(intent);
-			}
-		});
 	}
 
 

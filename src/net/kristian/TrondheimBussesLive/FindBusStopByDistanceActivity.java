@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.model.Position;
@@ -33,9 +32,6 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	
-		ListView lv = getListView();
-	    registerForContextMenu(lv);
 
 		final List<BusStop> busStops = getBusStops();
 		

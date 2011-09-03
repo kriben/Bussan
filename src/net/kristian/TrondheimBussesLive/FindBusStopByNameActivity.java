@@ -2,16 +2,11 @@ package net.kristian.TrondheimBussesLive;
 
 import java.util.List;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.io.BusStopRepository;
 
@@ -37,26 +32,15 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);	
         setContentView(R.layout.list_filter_by_name);
-
+        super.onCreate(savedInstanceState);	
+ 
         filterText = (EditText) findViewById(R.id.search_box);
         filterText.addTextChangedListener(filterTextWatcher);
 
         new DownloadBusStopTask(this).execute();
-        
-        ListView lv = getListView();
-        lv.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BusStop busStop = (BusStop) parent.getAdapter().getItem(position);
-                Intent intent = new Intent(view.getContext(), RealTimeActivity.class);
-                intent.putExtra("code", busStop.getCode());
-                startActivity(intent);
-            }
-        });
-
-        registerForContextMenu(lv);
     }
+
 
 
     @Override
