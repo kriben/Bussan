@@ -73,6 +73,8 @@ public class FindBusStopByNameActivity extends ListActivity {
         menu.setHeaderTitle("Favorite"); // TODO: get the name of the bus stop here
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.busstopmenu, menu);
+        MenuItem item = menu.findItem(R.id.remove_favorite);
+        item.setVisible(false);
     }
 
 
