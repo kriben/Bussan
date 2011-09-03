@@ -2,29 +2,21 @@ package net.kristian.TrondheimBussesLive;
 
 import java.util.List;
 
-import android.app.ListActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 
-public class FindBusStopByNameActivity extends ListActivity {
+public class FindBusStopByNameActivity extends BusStopListActivity {
 
     private EditText filterText = null;
     BusStopAdapter adapter = null;
@@ -66,38 +58,6 @@ public class FindBusStopByNameActivity extends ListActivity {
         registerForContextMenu(lv);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("Favorite"); // TODO: get the name of the bus stop here
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.busstopmenu, menu);
-        MenuItem item = menu.findItem(R.id.remove_favorite);
-        item.setVisible(false);
-    }
-
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        BusStop busStop = adapter.getItem(info.position);
-        switch (item.getItemId()) {
-        case R.id.add_favorite:
-            SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
-            List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
-            favorites.add(busStop.getCode());
-
-            SharedPreferences.Editor prefEditor = settings.edit();  
-            prefEditor.putString("favorites", PreferencesUtil.encodeBusStopString(favorites));  
-            prefEditor.commit(); 
-
-            Toast.makeText(this, "Added " + busStop.getName() + " to favorites!", Toast.LENGTH_LONG).show();
-            return true;
-        default:
-            return super.onContextItemSelected(item);
-        }
-    }
 
     @Override
     protected void onDestroy() {
@@ -129,4 +89,7 @@ public class FindBusStopByNameActivity extends ListActivity {
             setListAdapter(myActivity_.adapter);
         }
     }
+
+    @Override
+    protected void refreshBusStopListView() {}
 }
