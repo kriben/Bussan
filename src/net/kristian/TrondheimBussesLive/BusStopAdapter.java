@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusStop;
 
-public class BusStopAdapter extends ArrayAdapter<BusStop> {
+public class BusStopAdapter extends ArrayAdapter<BusStop> implements BusStopArrayAdapter {
 	public BusStopAdapter(Context context, 
 			int resource,
 			int textViewResourceId, 
@@ -23,7 +23,7 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {   
 		
-		BusStop busStop = getItem(position);
+		BusStop busStop = getBusStop(position);
 		LayoutInflater mInflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		convertView = mInflater.inflate(R.layout.list_item, null);
 		ViewHolder holder = new ViewHolder(convertView);
@@ -52,4 +52,11 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> {
 			return title;
 		}     
 	}
+
+
+
+    @Override
+    public BusStop getBusStop(int position) {
+        return getItem(position);
+    }
 } 

@@ -17,12 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.model.Position;
 import no.kriben.busstopstrondheim.io.BusStopRepository;
 
-public class FindBusStopByDistanceActivity extends ListActivity {
+public class FindBusStopByDistanceActivity extends BusStopListActivity {
     
 	private List<BusStop> getBusStops() {
 		BusStopRepository busStopRepository = ((SainntidApplication)getApplicationContext()).getBusStopRepository();
@@ -32,9 +33,12 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	//	setContentView(R.layout.list_busstopwithdistance_item);
-		final List<BusStop> busStops = getBusStops();
+	
+		ListView lv = getListView();
+	    registerForContextMenu(lv);
 
+		final List<BusStop> busStops = getBusStops();
+		
 		// Acquire a reference to the system Location Manager
 		final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -43,7 +47,6 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 			@Override
 			public void onLocationChanged(android.location.Location location) {
 				// Called when a new location is found by the network location provider.
-				System.out.println("GOT update: ");
 				// Remove the listener you previously added
 				locationManager.removeUpdates(this);
 				if (busStops != null) {
@@ -68,7 +71,7 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 
 	}
 
-	private class BusStopWithDistanceAdapter extends ArrayAdapter<BusStopWithDistance> {
+	private class BusStopWithDistanceAdapter extends ArrayAdapter<BusStopWithDistance> implements BusStopArrayAdapter {
 
 
 
@@ -134,6 +137,13 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 				return distance;
 			}
 		}
+
+
+        @Override
+        public BusStop getBusStop(int position) {
+            BusStopWithDistance busStop = getItem(position);
+            return busStop.getBusStop();
+        }
 	}
 
 
@@ -204,4 +214,9 @@ public class FindBusStopByDistanceActivity extends ListActivity {
 			setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.id.busstopwithdistance_list, R.id.busstopwithdistance_name,locations));
 		}
 	}
+
+
+
+    @Override
+    protected void refreshBusStopListView() { }
 }		

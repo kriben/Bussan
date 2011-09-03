@@ -33,7 +33,7 @@ public abstract class BusStopListActivity extends ListActivity {
         List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
         
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        BusStop busStop = (BusStop) getListAdapter().getItem(info.position);
+        BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
         
         boolean isFavorite = favorites.contains(busStop.getCode());
         MenuItem addItem = menu.findItem(R.id.add_favorite);
@@ -47,7 +47,7 @@ public abstract class BusStopListActivity extends ListActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        BusStop busStop = (BusStop) getListAdapter().getItem(info.position);
+        BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
         
         
         int itemId = item.getItemId();
