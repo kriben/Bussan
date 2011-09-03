@@ -52,26 +52,18 @@ public abstract class BusStopListActivity extends ListActivity {
         
         int itemId = item.getItemId();
         if (itemId == R.id.add_favorite) {
-            SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
-            List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
+            List<Integer> favorites = getSavedFavoriteBusStops();
             favorites.add(busStop.getCode());
-
-            SharedPreferences.Editor prefEditor = settings.edit();  
-            prefEditor.putString("favorites", PreferencesUtil.encodeBusStopString(favorites));  
-            prefEditor.commit(); 
+            saveFavoriteBusStops(favorites);
 
             Toast.makeText(this, "Added " + busStop.getName() + " to favorites!", Toast.LENGTH_LONG).show();
             return true;
         }
         else if (itemId == R.id.remove_favorite) {
-            SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
-            List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", ""));
+            List<Integer> favorites = getSavedFavoriteBusStops();
             favorites.remove(new Integer(busStop.getCode()));
-
-            SharedPreferences.Editor prefEditor = settings.edit();  
-            prefEditor.putString("favorites", PreferencesUtil.encodeBusStopString(favorites));  
-            prefEditor.commit(); 
-
+            saveFavoriteBusStops(favorites);
+           
             Toast.makeText(this, "Removed " + busStop.getName() + " from favorites!", Toast.LENGTH_LONG).show();
 
             refreshBusStopListView();
@@ -80,6 +72,19 @@ public abstract class BusStopListActivity extends ListActivity {
         else {
             return super.onContextItemSelected(item);
         }
+    }
+
+    private void saveFavoriteBusStops(List<Integer> favorites) {
+        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE); 
+        SharedPreferences.Editor prefEditor = settings.edit();  
+        prefEditor.putString("favorites", PreferencesUtil.encodeBusStopString(favorites));  
+        prefEditor.commit(); 
+        
+    }
+
+    private List<Integer> getSavedFavoriteBusStops() {
+        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
+        return PreferencesUtil.decodeBusStopString(settings.getString("favorites", ""));
     }
 
     abstract protected void refreshBusStopListView();
