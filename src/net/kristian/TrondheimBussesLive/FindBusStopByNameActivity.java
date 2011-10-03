@@ -32,7 +32,7 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.list_filter_by_name);
+        setContentView(R.layout.bus_stop_by_name_list);
         super.onCreate(savedInstanceState);	
  
         filterText = (EditText) findViewById(R.id.search_box);
@@ -68,7 +68,7 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
         /** The system calls this to perform work in the UI thread and delivers
          * the result from doInBackground() */
         protected void onPostExecute(List<BusStop> busStops) {
-            myActivity_.adapter = new BusStopAdapter(myActivity_.getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops);
+            myActivity_.adapter = new BusStopAdapter(myActivity_.getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops);
             myActivity_.busStops = busStops;
             setListAdapter(myActivity_.adapter);
         }

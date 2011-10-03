@@ -31,9 +31,10 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+	    setContentView(R.layout.bus_stop_by_distance_list);
 		super.onCreate(savedInstanceState);
 
-		final List<BusStop> busStops = getBusStops();
+		final List<BusStop> busStops = getBusStops(); 
 		
 		// Acquire a reference to the system Location Manager
 		final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
@@ -82,7 +83,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
 			BusStopWithDistance busStop = getItem(position);
 			LayoutInflater mInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = mInflater.inflate(R.layout.list_busstopwithdistance_item, null);
+			convertView = mInflater.inflate(R.layout.bus_stop_with_distance_item, null);
 			ViewHolder holder = new ViewHolder(convertView);
 			convertView.setTag(holder);
 
@@ -207,7 +208,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 		@Override
 		protected void onPostExecute(ArrayList<BusStopWithDistance> locations) {
 			progressDialog_.dismiss();
-			setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.id.busstopwithdistance_list, R.id.busstopwithdistance_name,locations));
+			setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.layout.bus_stop_by_distance_list, R.id.busstopwithdistance_name,locations));
 		}
 	}
 

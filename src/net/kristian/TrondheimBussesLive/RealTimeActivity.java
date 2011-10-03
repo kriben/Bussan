@@ -27,6 +27,7 @@ public class RealTimeActivity extends ListActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+	    setContentView(R.layout.bus_departure_list);
 		super.onCreate(savedInstanceState);
 		// first, check connectivity
 		if (ConnectivityChecker.isOnline(this)) {
@@ -75,7 +76,7 @@ public class RealTimeActivity extends ListActivity {
 			ViewHolder holder = null;
 			if (null == convertView){
 				LayoutInflater mInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-				convertView = mInflater.inflate(R.layout.list_busdeparture_item, null);
+				convertView = mInflater.inflate(R.layout.bus_departure_list_item, null);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			}
@@ -147,7 +148,7 @@ public class RealTimeActivity extends ListActivity {
 		/** The system calls this to perform work in the UI thread and delivers
 		 * the result from doInBackground() */
 		protected void onPostExecute(List<BusDeparture> busDepartures) {
-			setListAdapter(new CustomAdapter(myActivity_.getBaseContext(), R.layout.list_busdeparture_item, R.id.line, busDepartures));
+			setListAdapter(new CustomAdapter(myActivity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
 		}
 	}
 }

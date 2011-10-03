@@ -25,7 +25,7 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> implements BusStopArra
 		
 		BusStop busStop = getBusStop(position);
 		LayoutInflater mInflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-		convertView = mInflater.inflate(R.layout.list_item, null);
+		convertView = mInflater.inflate(R.layout.bus_stop_list_item, null);
 		ViewHolder holder = new ViewHolder(convertView);
 		convertView.setTag(holder);
 			

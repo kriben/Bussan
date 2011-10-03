@@ -15,6 +15,7 @@ import no.kriben.busstopstrondheim.io.BusStopRepository;
 public class FrontpageActivity extends BusStopListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+	    setContentView(R.layout.frontpage);
 		super.onCreate(savedInstanceState);
 
 		ListView lv = getListView();
@@ -33,7 +34,7 @@ public class FrontpageActivity extends BusStopListActivity {
 		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
 		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
 		List<BusStop> busStops = repo.getByCode(favorites);
-		setListAdapter(new BusStopAdapter(getBaseContext(), R.id.busstop_list, R.id.busstop_name, busStops));
+		setListAdapter(new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops));
 	}
 		
 	
