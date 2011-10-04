@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusDeparture;
@@ -24,6 +25,9 @@ import no.kriben.busstopstrondheim.io.BusDepartureRepository;
 
 public class RealTimeActivity extends ListActivity {
 
+    private int busStopCode_ = -1;
+    private ImageButton refreshButton_ = null;
+    
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,13 @@ public class RealTimeActivity extends ListActivity {
 			ListView lv = getListView();
 			lv.setTextFilterEnabled(true);
 
+			refreshButton_ = (ImageButton) findViewById(R.id.refresh_button);
+			refreshButton_.setEnabled(false);
+			
 			Bundle extras = getIntent().getExtras();
 			if (extras != null) {
-				int code = extras.getInt("code");
-				new DownloadBusDepartureTask(this).execute(code);
+				busStopCode_ = extras.getInt("code");
+				new DownloadBusDepartureTask(this).execute(busStopCode_);
 			}
 		}
 		else{
@@ -62,7 +69,14 @@ public class RealTimeActivity extends ListActivity {
 		}
 	}
 
-
+	public void onRefreshButtonClicked(View view) { 
+	    new DownloadBusDepartureTask(this).execute(busStopCode_);  
+	}
+	    
+	public ImageButton getRefreshButton() {
+	    return refreshButton_;
+	}
+	
 	private class CustomAdapter extends ArrayAdapter<BusDeparture> {
 		public CustomAdapter(Context context, 
 				int resource,
@@ -131,10 +145,11 @@ public class RealTimeActivity extends ListActivity {
 
 	private class DownloadBusDepartureTask extends AsyncTask<Integer, Void, List<BusDeparture>> {
 
-		private ListActivity myActivity_ = null;
+		private RealTimeActivity myActivity_ = null;
 
-		public DownloadBusDepartureTask(ListActivity myActivity) {
+		public DownloadBusDepartureTask(RealTimeActivity myActivity) {
 			myActivity_ = myActivity;
+			myActivity_.getRefreshButton().setEnabled(false);
 		}
 
 		/** The system calls this to perform work in a worker thread and
@@ -149,6 +164,7 @@ public class RealTimeActivity extends ListActivity {
 		 * the result from doInBackground() */
 		protected void onPostExecute(List<BusDeparture> busDepartures) {
 			setListAdapter(new CustomAdapter(myActivity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
+			myActivity_.getRefreshButton().setEnabled(true);
 		}
 	}
 }
