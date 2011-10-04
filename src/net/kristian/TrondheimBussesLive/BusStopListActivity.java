@@ -29,6 +29,8 @@ public abstract class BusStopListActivity extends ListActivity {
                 BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(position);
                 Intent intent = new Intent(view.getContext(), RealTimeActivity.class);
                 intent.putExtra("code", busStop.getCode());
+                intent.putExtra("name", busStop.getName());
+                intent.putExtra("id", busStop.getId());
                 startActivity(intent);
             }
         });

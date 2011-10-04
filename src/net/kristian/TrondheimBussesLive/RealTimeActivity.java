@@ -26,6 +26,7 @@ import no.kriben.busstopstrondheim.io.BusDepartureRepository;
 public class RealTimeActivity extends ListActivity {
 
     private int busStopCode_ = -1;
+    private String busStopName_ = "";
     private ImageButton refreshButton_ = null;
     
 	/** Called when the activity is first created. */
@@ -45,6 +46,11 @@ public class RealTimeActivity extends ListActivity {
 			Bundle extras = getIntent().getExtras();
 			if (extras != null) {
 				busStopCode_ = extras.getInt("code");
+				busStopName_ = extras.getString("name");
+				
+				TextView titleView = (TextView) findViewById(R.id.bus_departure_title);
+	            titleView.setText("Bus stop: " + busStopName_);
+				
 				new DownloadBusDepartureTask(this).execute(busStopCode_);
 			}
 		}
