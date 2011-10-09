@@ -1,4 +1,4 @@
-package net.kristian.TrondheimBussesLive;
+package net.kriben.bussan;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

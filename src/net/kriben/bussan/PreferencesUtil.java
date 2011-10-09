@@ -1,4 +1,4 @@
-package net.kristian.TrondheimBussesLive;
+package net.kriben.bussan;
 
 import java.util.ArrayList;
 import java.util.List;

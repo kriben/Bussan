@@ -1,4 +1,4 @@
-package net.kristian.TrondheimBussesLive;
+package net.kriben.bussan;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
