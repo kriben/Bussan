@@ -1,4 +1,4 @@
-package net.kriben.bussan;
+package no.kriben.bussan;
 
 import no.kriben.busstopstrondheim.model.BusStop;
 

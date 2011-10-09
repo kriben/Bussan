@@ -1,4 +1,4 @@
-package net.kriben.bussan;
+package no.kriben.bussan;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
