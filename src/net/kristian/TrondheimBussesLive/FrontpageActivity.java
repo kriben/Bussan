@@ -20,6 +20,7 @@ public class FrontpageActivity extends BusStopListActivity {
 
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
+		refreshBusStopListView();
 	}
 
 
@@ -32,7 +33,7 @@ public class FrontpageActivity extends BusStopListActivity {
 	protected void refreshBusStopListView() {
 		BusStopRepository repo = ((SainntidApplication)getApplicationContext()).getBusStopRepository();
 		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
-		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
+		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "16011477,16011265"));
 		List<BusStop> busStops = repo.getByCode(favorites);
 		setListAdapter(new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops));
 	}

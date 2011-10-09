@@ -44,13 +44,11 @@ public abstract class BusStopListActivity extends ListActivity {
         menu.setHeaderTitle("Favorite"); // TODO: get the name of the bus stop here
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.busstopmenu, menu);
-
-        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
-        List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "100948,100346"));
-
+  
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
 
+        List<Integer> favorites = getSavedFavoriteBusStops();
         boolean isFavorite = favorites.contains(busStop.getCode());
         MenuItem addItem = menu.findItem(R.id.add_favorite);
         addItem.setVisible(!isFavorite);
@@ -73,6 +71,7 @@ public abstract class BusStopListActivity extends ListActivity {
             saveFavoriteBusStops(favorites);
 
             Toast.makeText(this, "Added " + busStop.getName() + " to favorites!", Toast.LENGTH_LONG).show();
+            refreshBusStopListView();
             return true;
         }
         else if (itemId == R.id.remove_favorite) {
