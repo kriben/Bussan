@@ -60,7 +60,7 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
         /** The system calls this to perform work in a worker thread and
          * delivers it the parameters given to AsyncTask.execute() */
         protected List<BusStop> doInBackground(Void... voids) {
-            BusStopRepository busStopRepository = ((SainntidApplication)getApplicationContext()).getBusStopRepository();
+            BusStopRepository busStopRepository = ((BussanApplication)getApplicationContext()).getBusStopRepository();
             List<BusStop> busStop = busStopRepository.getAll(); 
             return busStop;
         }

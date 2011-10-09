@@ -161,7 +161,7 @@ public class RealTimeActivity extends ListActivity {
 		/** The system calls this to perform work in a worker thread and
 		 * delivers it the parameters given to AsyncTask.execute() */
 		protected List<BusDeparture> doInBackground(Integer... codes) {
-		    BusDepartureRepository busDepartureRepository = ((SainntidApplication)getApplicationContext()).getBusDepartureRepository();
+		    BusDepartureRepository busDepartureRepository = ((BussanApplication)getApplicationContext()).getBusDepartureRepository();
 		    List<BusDeparture> busDepartures = busDepartureRepository.getAllForBusStop(codes[0]); 
 			return busDepartures;
 		}

@@ -7,12 +7,12 @@ import no.kriben.busstopstrondheim.io.ItalianSoapBusStopRepository;
 import android.app.Application;
 import android.content.res.Resources;
 
-public class SainntidApplication extends Application {
+public class BussanApplication extends Application {
     
     private BusStopRepository busStopRepository_ = null;
     private BusDepartureRepository busDepartureRepository_ = null;
    
-    public SainntidApplication() {
+    public BussanApplication() {
         super();
     }
     

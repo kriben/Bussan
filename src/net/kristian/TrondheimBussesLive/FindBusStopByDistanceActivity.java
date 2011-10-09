@@ -25,7 +25,7 @@ import no.kriben.busstopstrondheim.io.BusStopRepository;
 public class FindBusStopByDistanceActivity extends BusStopListActivity {
     
 	private List<BusStop> getBusStops() {
-		BusStopRepository busStopRepository = ((SainntidApplication)getApplicationContext()).getBusStopRepository();
+		BusStopRepository busStopRepository = ((BussanApplication)getApplicationContext()).getBusStopRepository();
 		return busStopRepository.getAll();
 	}
 

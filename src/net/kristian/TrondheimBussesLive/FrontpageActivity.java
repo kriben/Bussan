@@ -31,7 +31,7 @@ public class FrontpageActivity extends BusStopListActivity {
 	}
 	
 	protected void refreshBusStopListView() {
-		BusStopRepository repo = ((SainntidApplication)getApplicationContext()).getBusStopRepository();
+		BusStopRepository repo = ((BussanApplication)getApplicationContext()).getBusStopRepository();
 		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
 		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "16011477,16011265"));
 		List<BusStop> busStops = repo.getByCode(favorites);
