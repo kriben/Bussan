@@ -99,7 +99,7 @@ public abstract class BusStopListActivity extends ListActivity {
 
     private List<Integer> getSavedFavoriteBusStops() {
         SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
-        return PreferencesUtil.decodeBusStopString(settings.getString("favorites", ""));
+        return PreferencesUtil.decodeBusStopString(settings.getString("favorites", getString(R.string.default_busstops)));
     }
 
     abstract protected void refreshBusStopListView();

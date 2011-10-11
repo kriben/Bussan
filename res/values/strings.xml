@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bussan</string>
+    <string name="default_busstops">"16011477,16011265,16011406"</string>
 </resources>

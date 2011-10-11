@@ -33,7 +33,7 @@ public class FrontpageActivity extends BusStopListActivity {
 	protected void refreshBusStopListView() {
 		BusStopRepository repo = ((BussanApplication)getApplicationContext()).getBusStopRepository();
 		SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
-		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", "16011477,16011265"));
+		List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", getString(R.string.default_busstops)));
 		List<BusStop> busStops = repo.getByCode(favorites);
 		setListAdapter(new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops));
 	}
