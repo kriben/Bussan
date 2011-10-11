@@ -24,6 +24,8 @@ import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 public class FindBusStopByDistanceActivity extends BusStopListActivity {
     
+    protected LocationListener locationListener_ = null;
+    
 	private List<BusStop> getBusStops() {
 		BusStopRepository busStopRepository = ((BussanApplication)getApplicationContext()).getBusStopRepository();
 		return busStopRepository.getAll();
@@ -33,19 +35,14 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    setContentView(R.layout.bus_stop_by_distance_list);
 		super.onCreate(savedInstanceState);
-
+     
 		final List<BusStop> busStops = getBusStops(); 
 		
-		// Acquire a reference to the system Location Manager
-		final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
-
 		// Define a listener that responds to location updates
-		LocationListener locationListener = new LocationListener() {
+		locationListener_ = new LocationListener() {
 			@Override
 			public void onLocationChanged(android.location.Location location) {
 				// Called when a new location is found by the network location provider.
-				// Remove the listener you previously added
-				locationManager.removeUpdates(this);
 				if (busStops != null) {
 				   Position position = new Position(location.getLatitude(), location.getLongitude());
 				   new FindClosestTask(FindBusStopByDistanceActivity.this, busStops).execute(position);
@@ -60,17 +57,33 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
 			@Override
 			public void onProviderDisabled(String provider) {}
-
 		};
-
+		
+		registerForLocationUpdates();
+	}
+	
+	protected void registerForLocationUpdates() {
+	    // Acquire a reference to the system Location Manager
+        final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);		
+		long MIN_TIME = 3000;
 		// Register the listener with the Location Manager to receive location updates
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener); 
-
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 0, locationListener_); 
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, 0, locationListener_);
 	}
 
+	protected void onResume() {
+	    super.onResume();
+	    registerForLocationUpdates();
+	}
+	
+	protected void onPause() {
+	    super.onPause();
+	    // Remove the listener you previously added
+	    final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
+	    locationManager.removeUpdates(locationListener_);
+	}
+	
 	private class BusStopWithDistanceAdapter extends ArrayAdapter<BusStopWithDistance> implements BusStopArrayAdapter {
-
-
 
 		public BusStopWithDistanceAdapter(Context context, int resource,
 				int textViewResourceId, ArrayList<BusStopWithDistance> items) {
@@ -119,11 +132,11 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 			public ViewHolder(View row) {
 				mRow = row;
 			}
+			
 			public TextView getTitle() {
 				if(null == title){
 					title = (TextView) mRow.findViewById(R.id.busstopwithdistance_name);
 				}
-			
 				return title;
 			}   
 			
