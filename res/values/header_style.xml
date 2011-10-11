@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<style name="HeaderTextView" parent="@android:style/TextAppearance">
+		<item name="android:background">#3366FF</item>
+		<item name="android:textColor">#ffffff</item>
+		<item name="android:textSize">20sp</item>
+		<item name="android:padding">8px</item>
+	</style>
+</resources>

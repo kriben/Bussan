@@ -4,13 +4,10 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	
-    <TextView android:id="@+id/frontpagetitle" 
+    <TextView android:id="@+id/frontpagetitle"
+        style="@style/HeaderTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#a3ab11"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        android:padding="8px"
         android:text="Bussan: Favorite bus stops"/>
 	
 	<ListView android:id="@android:id/list" 
