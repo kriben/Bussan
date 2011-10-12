@@ -15,12 +15,12 @@ import no.kriben.busstopstrondheim.io.StringCache;
 public class AndroidFileStringCache implements StringCache {
     private String fileName_ = "";
     private Context context_ = null;
-    
+
     private String PREFERENCE_FILENAME = "CacheFile";
     private String TIMESTAMP_TAG = "timestamp";
     // Refresh file every two weeks (milliseconds)
     private long MAX_AGE = 14 * 24 * 60 * 60 * 1000;
-    
+
     public AndroidFileStringCache(Context context, String fileName) {
         assert fileName.length() > 0;
         context_ = context;
@@ -32,10 +32,10 @@ public class AndroidFileStringCache implements StringCache {
             FileOutputStream fos = context_.openFileOutput(fileName_, Context.MODE_PRIVATE);
             fos.write(data.getBytes());
             fos.close();
-            
-            // Save the timestamp 
+
+            // Save the timestamp
             saveFileTimeStamp(System.currentTimeMillis());
-            
+
             System.out.println("WROTE TO DATA CACHE");
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -50,23 +50,23 @@ public class AndroidFileStringCache implements StringCache {
         System.out.println("SAVING FILE WITH TIME STAMP: " + time);
         SharedPreferences settings = context_.getSharedPreferences(PREFERENCE_FILENAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = settings.edit();
-        prefEditor.putLong(TIMESTAMP_TAG, time);  
-        prefEditor.commit(); 
+        prefEditor.putLong(TIMESTAMP_TAG, time);
+        prefEditor.commit();
     }
 
     private long getFileTimeStamp() {
-      
+
         SharedPreferences settings = context_.getSharedPreferences(PREFERENCE_FILENAME, Context.MODE_PRIVATE);
         long time = settings.getLong(TIMESTAMP_TAG, 0);
-    
+
           System.out.println("SAVING FILE WITH TIME STAMP: " + time);
           return time;
     }
-    
+
     public String get() {
         try {
             long fileTimestamp = getFileTimeStamp();
-           
+
             // If file is older than the threshold, and we are online the cache expires..
             // TODO: let the user choose if only wifi here
             long currentTime = System.currentTimeMillis();
@@ -74,8 +74,8 @@ public class AndroidFileStringCache implements StringCache {
                 System.out.println("EXPIRING CACHE..");
                 return "";
             }
-            
-            
+
+
             FileInputStream fis = context_.openFileInput(fileName_);
             BufferedReader r = new BufferedReader(new InputStreamReader(fis));
             StringBuilder total = new StringBuilder();
@@ -83,8 +83,8 @@ public class AndroidFileStringCache implements StringCache {
             while ((line = r.readLine()) != null) {
                 total.append(line);
             }
-            
-            
+
+
             System.out.println("READ FROM DATA CACHE");
             return total.toString();
         }

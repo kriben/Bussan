@@ -8,14 +8,14 @@ import android.app.Application;
 import android.content.res.Resources;
 
 public class BussanApplication extends Application {
-    
+
     private BusStopRepository busStopRepository_ = null;
     private BusDepartureRepository busDepartureRepository_ = null;
-   
+
     public BussanApplication() {
         super();
     }
-    
+
     public void onCreate() {
         super.onCreate();
         Resources res = getResources();
@@ -25,11 +25,11 @@ public class BussanApplication extends Application {
         busStopRepository_.setStringCache(new AndroidFileStringCache(this, "busstops.json"));
         busDepartureRepository_  = new ItalianSoapBusDepartureRepository(username, password);
     }
-    
+
     public BusStopRepository getBusStopRepository() {
         return busStopRepository_;
     }
-    
+
     public BusDepartureRepository getBusDepartureRepository() {
         return busDepartureRepository_;
     }

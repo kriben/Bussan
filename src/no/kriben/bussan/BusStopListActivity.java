@@ -34,7 +34,7 @@ public abstract class BusStopListActivity extends ListActivity {
                 startActivity(intent);
             }
         });
-        registerForContextMenu(lv);    
+        registerForContextMenu(lv);
     }
 
     @Override
@@ -44,7 +44,7 @@ public abstract class BusStopListActivity extends ListActivity {
         menu.setHeaderTitle("Favorite"); // TODO: get the name of the bus stop here
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.busstopmenu, menu);
-  
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
 
@@ -90,15 +90,15 @@ public abstract class BusStopListActivity extends ListActivity {
     }
 
     private void saveFavoriteBusStops(List<Integer> favorites) {
-        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE); 
-        SharedPreferences.Editor prefEditor = settings.edit();  
-        prefEditor.putString("favorites", PreferencesUtil.encodeBusStopString(favorites));  
-        prefEditor.commit(); 
+        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = settings.edit();
+        prefEditor.putString("favorites", PreferencesUtil.encodeBusStopString(favorites));
+        prefEditor.commit();
 
     }
 
     private List<Integer> getSavedFavoriteBusStops() {
-        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
+        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);
         return PreferencesUtil.decodeBusStopString(settings.getString("favorites", getString(R.string.default_busstops)));
     }
 

@@ -15,7 +15,7 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
 
     private EditText filterText = null;
     BusStopAdapter adapter = null;
-    List<BusStop> busStops = null;	
+    List<BusStop> busStops = null;
 
     private TextWatcher filterTextWatcher = new TextWatcher() {
         public void afterTextChanged(Editable s) {}
@@ -33,8 +33,8 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.bus_stop_by_name_list);
-        super.onCreate(savedInstanceState);	
- 
+        super.onCreate(savedInstanceState);
+
         filterText = (EditText) findViewById(R.id.search_box);
         filterText.addTextChangedListener(filterTextWatcher);
 
@@ -48,7 +48,7 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
         super.onDestroy();
         filterText.removeTextChangedListener(filterTextWatcher);
     }
-    
+
     private class DownloadBusStopTask extends AsyncTask<Void, Void, List<BusStop>> {
 
         private FindBusStopByNameActivity myActivity_ = null;
@@ -61,7 +61,7 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
          * delivers it the parameters given to AsyncTask.execute() */
         protected List<BusStop> doInBackground(Void... voids) {
             BusStopRepository busStopRepository = ((BussanApplication)getApplicationContext()).getBusStopRepository();
-            List<BusStop> busStop = busStopRepository.getAll(); 
+            List<BusStop> busStop = busStopRepository.getAll();
             return busStop;
         }
 

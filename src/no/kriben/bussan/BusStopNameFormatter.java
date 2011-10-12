@@ -12,9 +12,9 @@ public class BusStopNameFormatter {
         String direction = "";
         int id = new Integer(busStop.getId()).intValue();
         if (id < 2000) {
-            if (id < 1000) 
+            if (id < 1000)
                 direction = " (from town)";
-            else 
+            else
                 direction = " (to town)";
         }
         return busStop.getName() + direction;
