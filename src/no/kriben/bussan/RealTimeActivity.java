@@ -28,7 +28,7 @@ public class RealTimeActivity extends ListActivity {
     private int busStopCode_ = -1;
     private String busStopName_ = "";
     private ImageButton refreshButton_ = null;
-    
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,15 +42,15 @@ public class RealTimeActivity extends ListActivity {
 
             refreshButton_ = (ImageButton) findViewById(R.id.refresh_button);
             refreshButton_.setEnabled(false);
-                        
+
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 busStopCode_ = extras.getInt("code");
                 busStopName_ = extras.getString("name");
-                                
+
                 TextView titleView = (TextView) findViewById(R.id.bus_departure_title);
                 titleView.setText("Bus stop: " + busStopName_);
-                                
+
                 new DownloadBusDepartureTask(this).execute(busStopCode_);
             }
         }
@@ -75,24 +75,24 @@ public class RealTimeActivity extends ListActivity {
         }
     }
 
-    public void onRefreshButtonClicked(View view) { 
-        new DownloadBusDepartureTask(this).execute(busStopCode_);  
+    public void onRefreshButtonClicked(View view) {
+        new DownloadBusDepartureTask(this).execute(busStopCode_);
     }
-            
+
     public ImageButton getRefreshButton() {
         return refreshButton_;
     }
-        
+
     private class CustomAdapter extends ArrayAdapter<BusDeparture> {
-        public CustomAdapter(Context context, 
+        public CustomAdapter(Context context,
                              int resource,
-                             int textViewResourceId, 
-                             List<BusDeparture> objects) {               
+                             int textViewResourceId,
+                             List<BusDeparture> objects) {
             super(context, resource, textViewResourceId, objects);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {   
+        public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
             if (null == convertView){
                 LayoutInflater mInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -100,23 +100,23 @@ public class RealTimeActivity extends ListActivity {
                 holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
             }
-                        
+
             BusDeparture departure = getItem(position);
-                        
+
             holder = (ViewHolder) convertView.getTag();
             TextView line = holder.getLine();
             line.setText(departure.getLine());
-                        
+
             TextView destination = holder.getDestination();
             destination.setText(departure.getDestination());
-                        
+
             TextView departureTime = holder.getDepartureTime();
             departureTime.setText( departure.getTime());
 
             return convertView;
         }
-                
-                
+
+
         private class ViewHolder {
             private View mRow;
             private TextView line = null;
@@ -132,14 +132,14 @@ public class RealTimeActivity extends ListActivity {
                     line = (TextView) mRow.findViewById(R.id.line);
                 }
                 return line;
-            }     
+            }
 
             public TextView getDestination() {
                 if(null == destination){
                     destination = (TextView) mRow.findViewById(R.id.destination);
                 }
                 return destination;
-            }     
+            }
 
             public TextView getDepartureTime() {
                 if(null == departureTime){
@@ -148,7 +148,7 @@ public class RealTimeActivity extends ListActivity {
                 return departureTime;
             }
         }
-    } 
+    }
 
 
 
@@ -165,7 +165,7 @@ public class RealTimeActivity extends ListActivity {
          * delivers it the parameters given to AsyncTask.execute() */
         protected List<BusDeparture> doInBackground(Integer... codes) {
             BusDepartureRepository busDepartureRepository = ((BussanApplication)getApplicationContext()).getBusDepartureRepository();
-            List<BusDeparture> busDepartures = busDepartureRepository.getAllForBusStop(codes[0]); 
+            List<BusDeparture> busDepartures = busDepartureRepository.getAllForBusStop(codes[0]);
             return busDepartures;
         }
 
