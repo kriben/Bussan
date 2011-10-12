@@ -22,7 +22,7 @@ public class BussanApplication extends Application {
         String username = res.getString(R.string.username);
         String password = res.getString(R.string.password);
         busStopRepository_ = new ItalianSoapBusStopRepository(username, password);
-        busStopRepository_.setStringCache(new AndroidFileStringCache(this, "bustops4.json"));
+        busStopRepository_.setStringCache(new AndroidFileStringCache(this, "busstops.json"));
         busDepartureRepository_  = new ItalianSoapBusDepartureRepository(username, password);
     }
     
