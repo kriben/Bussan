@@ -25,7 +25,7 @@ public class FrontpageActivity extends BusStopListActivity {
 
 
     @Override
-        public void onResume() {
+    public void onResume() {
         super.onResume();
         refreshBusStopListView();
     }

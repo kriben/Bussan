@@ -19,7 +19,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
 public abstract class BusStopListActivity extends ListActivity {
-
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -39,7 +39,7 @@ public abstract class BusStopListActivity extends ListActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenuInfo menuInfo) {
+				    ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Favorite"); // TODO: get the name of the bus stop here
         MenuInflater inflater = getMenuInflater();
@@ -62,7 +62,6 @@ public abstract class BusStopListActivity extends ListActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
-
 
         int itemId = item.getItemId();
         if (itemId == R.id.add_favorite) {

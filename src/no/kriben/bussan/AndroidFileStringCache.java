@@ -16,10 +16,10 @@ public class AndroidFileStringCache implements StringCache {
     private String fileName_ = "";
     private Context context_ = null;
 
-    private String PREFERENCE_FILENAME = "CacheFile";
-    private String TIMESTAMP_TAG = "timestamp";
+    private static final String PREFERENCE_FILENAME = "CacheFile";
+    private static final String TIMESTAMP_TAG = "timestamp";
     // Refresh file every two weeks (milliseconds)
-    private long MAX_AGE = 14 * 24 * 60 * 60 * 1000;
+    private static final long MAX_AGE = 14 * 24 * 60 * 60 * 1000;
 
     public AndroidFileStringCache(Context context, String fileName) {
         assert fileName.length() > 0;

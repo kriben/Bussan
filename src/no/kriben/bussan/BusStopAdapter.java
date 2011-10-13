@@ -35,24 +35,24 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> implements BusStopArra
     }
 
 
-    private class ViewHolder {
-        private View mRow;
-        private TextView title = null;
-
-        public ViewHolder(View row) {
-            mRow = row;
-        }
-
-        public TextView getTitle() {
-            if(null == title){
-                title = (TextView) mRow.findViewById(R.id.busstop_name);
-            }
-            return title;
-        }
-    }
-
     @Override
     public BusStop getBusStop(int position) {
         return getItem(position);
+    }
+
+    private class ViewHolder {
+        private View row_;
+        private TextView title_ = null;
+
+        public ViewHolder(View row) {
+            row_ = row;
+        }
+
+        public TextView getTitle() {
+            if (title_ == null){
+                title_ = (TextView) row_.findViewById(R.id.busstop_name);
+            }
+            return title_;
+        }
     }
 }

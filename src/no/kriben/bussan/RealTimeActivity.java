@@ -118,34 +118,34 @@ public class RealTimeActivity extends ListActivity {
 
 
         private class ViewHolder {
-            private View mRow;
-            private TextView line = null;
-            private TextView destination = null;
-            private TextView departureTime = null;
+            private View row_;
+            private TextView line_ = null;
+            private TextView destination_ = null;
+            private TextView departureTime_ = null;
 
             public ViewHolder(View row) {
-                mRow = row;
+                row_ = row;
             }
 
             public TextView getLine() {
-                if(null == line){
-                    line = (TextView) mRow.findViewById(R.id.line);
+                if (line_ == null){
+                    line_ = (TextView) row_.findViewById(R.id.line);
                 }
-                return line;
+                return line_;
             }
 
             public TextView getDestination() {
-                if(null == destination){
-                    destination = (TextView) mRow.findViewById(R.id.destination);
+                if (destination_ == null) {
+                    destination_ = (TextView) row_.findViewById(R.id.destination);
                 }
-                return destination;
+                return destination_;
             }
 
             public TextView getDepartureTime() {
-                if(null == departureTime){
-                    departureTime = (TextView) mRow.findViewById(R.id.departuretime);
+                if (departureTime_ == null) {
+                    departureTime_ = (TextView) row_.findViewById(R.id.departuretime);
                 }
-                return departureTime;
+                return departureTime_;
             }
         }
     }
@@ -154,11 +154,11 @@ public class RealTimeActivity extends ListActivity {
 
     private class DownloadBusDepartureTask extends AsyncTask<Integer, Void, List<BusDeparture>> {
 
-        private RealTimeActivity myActivity_ = null;
+        private RealTimeActivity activity_ = null;
 
-        public DownloadBusDepartureTask(RealTimeActivity myActivity) {
-            myActivity_ = myActivity;
-            myActivity_.getRefreshButton().setEnabled(false);
+        public DownloadBusDepartureTask(RealTimeActivity activity) {
+            activity_ = activity;
+            activity_.getRefreshButton().setEnabled(false);
         }
 
         /** The system calls this to perform work in a worker thread and
@@ -172,8 +172,8 @@ public class RealTimeActivity extends ListActivity {
         /** The system calls this to perform work in the UI thread and delivers
          * the result from doInBackground() */
         protected void onPostExecute(List<BusDeparture> busDepartures) {
-            setListAdapter(new CustomAdapter(myActivity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
-            myActivity_.getRefreshButton().setEnabled(true);
+            setListAdapter(new CustomAdapter(activity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
+            activity_.getRefreshButton().setEnabled(true);
         }
     }
 }

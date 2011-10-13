@@ -13,7 +13,9 @@ import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 public class FindBusStopByNameActivity extends BusStopListActivity {
 
-    private EditText filterText = null;
+    private EditText filterText_ = null;
+
+    // TODO: make private and add getters for these..
     BusStopAdapter adapter = null;
     List<BusStop> busStops = null;
 
@@ -35,8 +37,8 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
         setContentView(R.layout.bus_stop_by_name_list);
         super.onCreate(savedInstanceState);
 
-        filterText = (EditText) findViewById(R.id.search_box);
-        filterText.addTextChangedListener(filterTextWatcher);
+        filterText_ = (EditText) findViewById(R.id.search_box);
+        filterText_.addTextChangedListener(filterTextWatcher);
 
         new DownloadBusStopTask(this).execute();
     }
@@ -46,15 +48,15 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        filterText.removeTextChangedListener(filterTextWatcher);
+        filterText_.removeTextChangedListener(filterTextWatcher);
     }
 
     private class DownloadBusStopTask extends AsyncTask<Void, Void, List<BusStop>> {
 
-        private FindBusStopByNameActivity myActivity_ = null;
+        private FindBusStopByNameActivity activity_ = null;
 
-        public DownloadBusStopTask(FindBusStopByNameActivity myActivity) {
-            myActivity_ = myActivity;
+        public DownloadBusStopTask(FindBusStopByNameActivity activity) {
+            activity_ = activity;
         }
 
         /** The system calls this to perform work in a worker thread and
@@ -68,9 +70,9 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
         /** The system calls this to perform work in the UI thread and delivers
          * the result from doInBackground() */
         protected void onPostExecute(List<BusStop> busStops) {
-            myActivity_.adapter = new BusStopAdapter(myActivity_.getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops);
-            myActivity_.busStops = busStops;
-            setListAdapter(myActivity_.adapter);
+            activity_.adapter = new BusStopAdapter(activity_.getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops);
+            activity_.busStops = busStops;
+            setListAdapter(activity_.adapter);
         }
     }
 

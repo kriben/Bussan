@@ -12,7 +12,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +61,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
         registerForLocationUpdates();
     }
 
+
     protected void registerForLocationUpdates() {
         // Acquire a reference to the system Location Manager
         final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
@@ -82,6 +82,11 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
         final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener_);
     }
+
+
+    @Override
+    protected void refreshBusStopListView() { }
+
 
     private class BusStopWithDistanceAdapter extends ArrayAdapter<BusStopWithDistance> implements BusStopArrayAdapter {
 
@@ -126,26 +131,26 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
 
         private class ViewHolder {
-            private View mRow;
-            private TextView title = null;
-            private TextView distance = null;
+            private View row_;
+            private TextView title_ = null;
+            private TextView distance_ = null;
 
             public ViewHolder(View row) {
-                mRow = row;
+                row_ = row;
             }
 
             public TextView getTitle() {
-                if (title == null) {
-                    title = (TextView) mRow.findViewById(R.id.busstopwithdistance_name);
+                if (title_ == null) {
+                    title_ = (TextView) row_.findViewById(R.id.busstopwithdistance_name);
                 }
-                return title;
+                return title_;
             }
 
             public TextView getDistance() {
-                if (distance == null) {
-                    distance = (TextView) mRow.findViewById(R.id.busstopwithdistance_distance);
+                if (distance_ == null) {
+                    distance_ = (TextView) row_.findViewById(R.id.busstopwithdistance_distance);
                 }
-                return distance;
+                return distance_;
             }
         }
 
@@ -158,11 +163,9 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
     }
 
 
-
     private class FindClosestTask extends AsyncTask<Position, Integer, ArrayList<BusStopWithDistance>> {
 
         private List<BusStop> locations_;
-        private String TAG = "FindClosestTask";
         private ProgressDialog progressDialog_;
 
         private ListActivity activity_ = null;
@@ -179,9 +182,6 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
         protected ArrayList<BusStopWithDistance> doInBackground(Position ...positions) {
 
             Position position = positions[0];
-            Log.i(TAG, "Looking for location for pos: [" +
-                  position.getLatitude() + ", " + position.getLongitude() + "]");
-
             ArrayList<BusStopWithDistance> busStopsWithDistance = new ArrayList<BusStopWithDistance>();
 
             int progress = 0;
@@ -222,7 +222,4 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
             setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.layout.bus_stop_by_distance_list, R.id.busstopwithdistance_name,locations));
         }
     }
-
-    @Override
-    protected void refreshBusStopListView() { }
 }
