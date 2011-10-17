@@ -19,32 +19,31 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.model.Position;
-import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
     protected LocationListener locationListener_ = null;
-
-    private List<BusStop> getBusStops() {
-        BusStopRepository busStopRepository = ((BussanApplication)getApplicationContext()).getBusStopRepository();
-        return busStopRepository.getAll();
-    }
+    protected List<BusStop> busStops_ = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.bus_stop_by_distance_list);
         super.onCreate(savedInstanceState);
 
-        final List<BusStop> busStops = getBusStops();
+        startDownloadBusStopTask();
+    }
+
+    protected void refreshBusStopListView(List<BusStop> busStops) {
+        busStops_ = busStops;
 
         // Define a listener that responds to location updates
         locationListener_ = new LocationListener() {
             @Override
             public void onLocationChanged(android.location.Location location) {
                 // Called when a new location is found by the network location provider.
-                if (busStops != null) {
+                if (busStops_ != null) {
                     Position position = new Position(location.getLatitude(), location.getLongitude());
-                    new FindClosestTask(FindBusStopByDistanceActivity.this, busStops).execute(position);
+                    new FindClosestTask(FindBusStopByDistanceActivity.this, busStops_).execute(position);
                 }
             }
 
@@ -73,7 +72,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
     protected void onResume() {
         super.onResume();
-        registerForLocationUpdates();
+        startDownloadBusStopTask();
     }
 
     protected void onPause() {

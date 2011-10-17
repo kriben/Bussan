@@ -2,10 +2,14 @@ package no.kriben.bussan;
 
 import java.util.List;
 
+import no.kriben.busstopstrondheim.io.BusStopRepository;
+import no.kriben.busstopstrondheim.io.ProgressHandler;
 import no.kriben.busstopstrondheim.model.BusStop;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -39,7 +43,7 @@ public abstract class BusStopListActivity extends ListActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-				    ContextMenuInfo menuInfo) {
+                                    ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Favorite"); // TODO: get the name of the bus stop here
         MenuInflater inflater = getMenuInflater();
@@ -102,4 +106,81 @@ public abstract class BusStopListActivity extends ListActivity {
     }
 
     abstract protected void refreshBusStopListView();
+    abstract protected void refreshBusStopListView(List<BusStop> busStops);
+
+    protected void startDownloadBusStopTask() {
+        new DownloadBusStopsTask(this).execute();
+    }
+
+    private class DownloadBusStopsTask extends AsyncTask<Void, Integer, List<BusStop>> implements ProgressHandler
+    {
+        private ProgressDialog progressDialog_ = null;
+        private BusStopListActivity activity_ = null;
+        private String message_ = "";
+        private double completeFraction_ = 0.0;
+
+        public DownloadBusStopsTask(BusStopListActivity activity) {
+            activity_ = activity;
+        }
+
+
+        /** The system calls this to perform work in a worker thread and
+         * delivers it the parameters given to AsyncTask.execute() */
+        @Override
+        protected List<BusStop> doInBackground(Void ...positions) {
+
+            BusStopRepository busStopRepository = ((BussanApplication)getApplicationContext()).getBusStopRepository();
+            //AsyncTaskProgressHandler progressHandler = new AsyncTaskProgressHandler();
+            List<BusStop> busStops = busStopRepository.getAll(this);
+            return busStops;
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            if (progressDialog_ == null) {
+                progressDialog_ = ProgressDialog.show(BusStopListActivity.this, "",
+                                                      "Finding bus stops. Please wait...");
+                progressDialog_.setMax(100);
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+            progressDialog_.setMessage(getMessage());
+            progressDialog_.setProgress(progress[0]);
+        }
+
+
+        /** The system calls this to perform work in the UI thread and delivers
+         * the result from doInBackground() */
+        @Override
+        protected void onPostExecute(List<BusStop> busStops) {
+            progressDialog_.dismiss();
+            activity_.refreshBusStopListView(busStops);
+        }
+
+
+        @Override
+        public double getCompleteFraction() {
+            return completeFraction_;
+        }
+
+
+        @Override
+        public String getMessage() {
+            return message_;
+        }
+
+
+        @Override
+        public void setProgress(double completeFraction, String message) {
+            completeFraction_ = completeFraction;
+            message_ = message;
+
+            int asInt = (int) (completeFraction * 100.0);
+            Integer[] fractions = { asInt };
+            publishProgress(fractions);
+        }
+    }
 }

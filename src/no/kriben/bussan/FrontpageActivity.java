@@ -1,5 +1,6 @@
 package no.kriben.bussan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 import no.kriben.busstopstrondheim.model.BusStop;
-import no.kriben.busstopstrondheim.io.BusStopRepository;
 
 public class FrontpageActivity extends BusStopListActivity {
     @Override
@@ -20,25 +20,39 @@ public class FrontpageActivity extends BusStopListActivity {
 
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
-        refreshBusStopListView();
+
+        startDownloadBusStopTask();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        refreshBusStopListView();
+        startDownloadBusStopTask();
     }
-        
-    protected void refreshBusStopListView() {
-        BusStopRepository repo = ((BussanApplication)getApplicationContext()).getBusStopRepository();
-        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);  
+
+    private List<BusStop> filterByCode(List<Integer> codes, List<BusStop> allBusStops) {
+        List<BusStop> filteredBusStops = new ArrayList<BusStop>();
+        for (BusStop busStop : allBusStops) {
+            if (codes.contains(busStop.getCode()))
+                filteredBusStops.add(busStop);
+        }
+
+        return filteredBusStops;
+    }
+
+    protected void refreshBusStopListView(List<BusStop> busStops) {
+        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);
         List<Integer> favorites = PreferencesUtil.decodeBusStopString(settings.getString("favorites", getString(R.string.default_busstops)));
-        List<BusStop> busStops = repo.getByCode(favorites);
-        setListAdapter(new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops));
+        List<BusStop> filteredBusStops = filterByCode(favorites, busStops);
+        setListAdapter(new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, filteredBusStops));
     }
-                
-        
+
+    protected void refreshBusStopListView() {
+        startDownloadBusStopTask();
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -49,7 +63,7 @@ public class FrontpageActivity extends BusStopListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.find_closest:     
+        case R.id.find_closest:
             startActivity(new Intent(FrontpageActivity.this, FindBusStopByDistanceActivity.class));
             break;
         case R.id.find_by_name:
