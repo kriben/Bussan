@@ -64,10 +64,11 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
     protected void registerForLocationUpdates() {
         // Acquire a reference to the system Location Manager
         final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
-        long MIN_TIME = 3000;
+        long MIN_TIME = 90000; // milliseconds
+        float MIN_DISTANCE_MOVED = 50.0f; // meters
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, 0, locationListener_);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, 0, locationListener_);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE_MOVED, locationListener_);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE_MOVED, locationListener_);
     }
 
     protected void onResume() {
