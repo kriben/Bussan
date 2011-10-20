@@ -10,7 +10,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +42,8 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
                 // Called when a new location is found by the network location provider.
                 if (busStops_ != null && !isFinishing()) {
                     Position position = new Position(location.getLatitude(), location.getLongitude());
-                    new FindClosestTask(FindBusStopByDistanceActivity.this, busStops_).execute(position);
+                    if (!((BussanApplication) getApplication()).hasRunningTask(FindBusStopByDistanceActivity.this))
+                        new FindClosestTask(FindBusStopByDistanceActivity.this, busStops_).execute(position);
                 }
             }
 
@@ -78,11 +78,25 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
     protected void onPause() {
         super.onPause();
-        // Remove the listener you previously added
-        final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.removeUpdates(locationListener_);
+        if (locationListener_ != null) {
+            // Remove the listener you previously added
+            final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
+            locationManager.removeUpdates(locationListener_);
+        }
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ((BussanApplication) getApplication()).detach(this);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ((BussanApplication) getApplication()).attach(this);
+    }
 
     @Override
     protected void refreshBusStopListView() { }
@@ -163,15 +177,13 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
     }
 
 
-    private class FindClosestTask extends AsyncTask<Position, Integer, ArrayList<BusStopWithDistance>> {
+    private class FindClosestTask extends BussanAsyncTask<Position, Integer, ArrayList<BusStopWithDistance>> {
 
         private List<BusStop> locations_;
         private ProgressDialog progressDialog_;
 
-        private ListActivity activity_ = null;
-
         public FindClosestTask(ListActivity activity, List<BusStop> locations) {
-            activity_ = activity;
+            super(activity);
             locations_ = locations;
         }
 
@@ -201,6 +213,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
         @Override
         protected void onPreExecute() {
+            super.onPreExecute();
             if (progressDialog_ == null && !isFinishing()) {
                 progressDialog_ = ProgressDialog.show(FindBusStopByDistanceActivity.this, "",
                                                       "Finding the closest bus stops. Please wait...");
@@ -210,7 +223,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
         @Override
         protected void onProgressUpdate(Integer... progress) {
-            if (!isFinishing()) {
+            if (activity_ != null && !isFinishing()) {
                 progressDialog_.setProgress(progress[0]);
             }
         }
@@ -220,7 +233,8 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
          * the result from doInBackground() */
         @Override
         protected void onPostExecute(ArrayList<BusStopWithDistance> locations) {
-            if (!isFinishing()) {
+            super.onPostExecute(locations);
+            if (activity_ != null && !isFinishing()) {
                 progressDialog_.dismiss();
                 setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.layout.bus_stop_by_distance_list, R.id.busstopwithdistance_name,locations));
             }

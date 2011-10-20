@@ -8,7 +8,6 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
@@ -74,6 +73,20 @@ public class RealTimeActivity extends ListActivity {
                 .show();
         }
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ((BussanApplication) getApplication()).detach(this);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ((BussanApplication) getApplication()).attach(this);
+    }
+
 
     public void onRefreshButtonClicked(View view) {
         new DownloadBusDepartureTask(this).execute(busStopCode_);
@@ -152,13 +165,11 @@ public class RealTimeActivity extends ListActivity {
 
 
 
-    private class DownloadBusDepartureTask extends AsyncTask<Integer, Void, List<BusDeparture>> {
-
-        private RealTimeActivity activity_ = null;
+    private class DownloadBusDepartureTask extends BussanAsyncTask<Integer, Void, List<BusDeparture>> {
 
         public DownloadBusDepartureTask(RealTimeActivity activity) {
-            activity_ = activity;
-            activity_.getRefreshButton().setEnabled(false);
+            super(activity);
+            activity.getRefreshButton().setEnabled(false);
         }
 
         /** The system calls this to perform work in a worker thread and
@@ -172,8 +183,11 @@ public class RealTimeActivity extends ListActivity {
         /** The system calls this to perform work in the UI thread and delivers
          * the result from doInBackground() */
         protected void onPostExecute(List<BusDeparture> busDepartures) {
-            setListAdapter(new CustomAdapter(activity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
-            activity_.getRefreshButton().setEnabled(true);
+            super.onPostExecute(busDepartures);
+            if (activity_ != null) {
+                setListAdapter(new CustomAdapter(activity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
+                ((RealTimeActivity) activity_).getRefreshButton().setEnabled(true);
+            }
         }
     }
 }

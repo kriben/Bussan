@@ -9,7 +9,6 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -109,18 +108,30 @@ public abstract class BusStopListActivity extends ListActivity {
     abstract protected void refreshBusStopListView(List<BusStop> busStops);
 
     protected void startDownloadBusStopTask() {
-        new DownloadBusStopsTask(this).execute();
+        if (!((BussanApplication) getApplication()).hasRunningTask(this))
+            new DownloadBusStopsTask(this).execute();
     }
 
-    private class DownloadBusStopsTask extends AsyncTask<Void, Integer, List<BusStop>> implements ProgressHandler
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ((BussanApplication) getApplication()).detach(this);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ((BussanApplication) getApplication()).attach(this);
+    }
+
+    private class DownloadBusStopsTask extends BussanAsyncTask<Void, Integer, List<BusStop>> implements ProgressHandler
     {
         private ProgressDialog progressDialog_ = null;
-        private BusStopListActivity activity_ = null;
         private String message_ = "";
         private double completeFraction_ = 0.0;
 
         public DownloadBusStopsTask(BusStopListActivity activity) {
-            activity_ = activity;
+            super(activity);
         }
 
 
@@ -138,6 +149,11 @@ public abstract class BusStopListActivity extends ListActivity {
 
         @Override
         protected void onPreExecute() {
+            super.onPreExecute();
+            showProgressDialog();
+        }
+
+        protected void showProgressDialog() {
             if (progressDialog_ == null) {
                 progressDialog_ = ProgressDialog.show(BusStopListActivity.this, "",
                                                       "Finding bus stops. Please wait...");
@@ -156,8 +172,12 @@ public abstract class BusStopListActivity extends ListActivity {
          * the result from doInBackground() */
         @Override
         protected void onPostExecute(List<BusStop> busStops) {
-            progressDialog_.dismiss();
-            activity_.refreshBusStopListView(busStops);
+            super.onPostExecute(busStops);
+
+            if (activity_ != null) {
+                progressDialog_.dismiss();
+                ((BusStopListActivity) activity_).refreshBusStopListView(busStops);
+            }
         }
 
 
@@ -172,6 +192,19 @@ public abstract class BusStopListActivity extends ListActivity {
             return message_;
         }
 
+
+        @Override
+        protected void onActivityDetached() {
+            if (progressDialog_ != null) {
+                progressDialog_.dismiss();
+                progressDialog_ = null;
+            }
+        }
+
+        @Override
+        protected void onActivityAttached() {
+            showProgressDialog();
+        }
 
         @Override
         public void setProgress(double completeFraction, String message) {
