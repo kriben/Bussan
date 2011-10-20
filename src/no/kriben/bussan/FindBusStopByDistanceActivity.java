@@ -41,7 +41,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
             @Override
             public void onLocationChanged(android.location.Location location) {
                 // Called when a new location is found by the network location provider.
-                if (busStops_ != null) {
+                if (busStops_ != null && !isFinishing()) {
                     Position position = new Position(location.getLatitude(), location.getLongitude());
                     new FindClosestTask(FindBusStopByDistanceActivity.this, busStops_).execute(position);
                 }
@@ -201,7 +201,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
         @Override
         protected void onPreExecute() {
-            if (progressDialog_ == null) {
+            if (progressDialog_ == null && !isFinishing()) {
                 progressDialog_ = ProgressDialog.show(FindBusStopByDistanceActivity.this, "",
                                                       "Finding the closest bus stops. Please wait...");
                 progressDialog_.setMax(locations_.size());
@@ -210,7 +210,9 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
         @Override
         protected void onProgressUpdate(Integer... progress) {
-            progressDialog_.setProgress(progress[0]);
+            if (!isFinishing()) {
+                progressDialog_.setProgress(progress[0]);
+            }
         }
 
 
@@ -218,8 +220,10 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
          * the result from doInBackground() */
         @Override
         protected void onPostExecute(ArrayList<BusStopWithDistance> locations) {
-            progressDialog_.dismiss();
-            setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.layout.bus_stop_by_distance_list, R.id.busstopwithdistance_name,locations));
+            if (!isFinishing()) {
+                progressDialog_.dismiss();
+                setListAdapter(new BusStopWithDistanceAdapter(activity_.getBaseContext(), R.layout.bus_stop_by_distance_list, R.id.busstopwithdistance_name,locations));
+            }
         }
     }
 }
