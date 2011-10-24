@@ -4,4 +4,6 @@
           android:title="Add to favorites" />
      <item android:id="@+id/remove_favorite"
           android:title="Remove from favorites" />
+     <item android:id="@+id/show_in_map"
+          android:title="Show in map" />
 </menu>

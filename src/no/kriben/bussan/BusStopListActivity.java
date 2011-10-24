@@ -7,8 +7,10 @@ import no.kriben.busstopstrondheim.io.ProgressHandler;
 import no.kriben.busstopstrondheim.model.BusStop;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -58,6 +60,9 @@ public abstract class BusStopListActivity extends ListActivity {
 
         MenuItem removeItem = menu.findItem(R.id.remove_favorite);
         removeItem.setVisible(isFavorite);
+
+        MenuItem showInMapItem = menu.findItem(R.id.show_in_map);
+        showInMapItem.setVisible(true);
     }
 
 
@@ -84,6 +89,19 @@ public abstract class BusStopListActivity extends ListActivity {
             Toast.makeText(this, "Removed " + busStop.getName() + " from favorites!", Toast.LENGTH_LONG).show();
 
             refreshBusStopListView();
+            return true;
+        }
+        else if (itemId == R.id.show_in_map) {
+            // Use trick from here to center on a position with a marker
+            // http://stackoverflow.com/questions/2662531/launching-google-maps-directions-via-an-intent-on-android/4433117
+            String uri = "geo:0,0?q="+ busStop.getPosition().getLatitude() + "," + busStop.getPosition().getLongitude() + " (" + busStop.getName() + ")";
+            try {
+                startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+            }
+            catch (ActivityNotFoundException e) {
+                Toast.makeText(this, "Unable to show location in map.", Toast.LENGTH_LONG).show();
+            }
+
             return true;
         }
         else {
