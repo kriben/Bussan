@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/add_favorite"
+          android:icon="@drawable/ic_menu_star"
           android:title="Add to favorites" />
      <item android:id="@+id/remove_favorite"
+          android:icon="@drawable/ic_menu_delete"
           android:title="Remove from favorites" />
      <item android:id="@+id/show_in_map"
+          android:icon="@drawable/ic_dialog_map"
           android:title="Show in map" />
 </menu>
