@@ -11,6 +11,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,14 +21,15 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import no.kriben.busstopstrondheim.model.BusDeparture;
+import no.kriben.busstopstrondheim.model.BusStop;
+import no.kriben.busstopstrondheim.model.Position;
 import no.kriben.busstopstrondheim.io.BusDepartureRepository;
 
 
 
 public class RealTimeActivity extends ListActivity {
 
-    private int busStopCode_ = -1;
-    private String busStopName_ = "";
+    private BusStop busStop_ = null;
     private ImageButton refreshButton_ = null;
 
     /** Called when the activity is first created. */
@@ -44,13 +48,20 @@ public class RealTimeActivity extends ListActivity {
 
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
-                busStopCode_ = extras.getInt("code");
-                busStopName_ = extras.getString("name");
+                int busStopCode = extras.getInt("code");
+                String busStopName = extras.getString("name");
+                String busStopId = extras.getString("id");
+
+                double longitude = extras.getDouble("longitude");
+                double latitude = extras.getDouble("latitude");
+
+                busStop_ = new BusStop(busStopName, busStopId, busStopCode);
+                busStop_.setPosition(new Position(latitude, longitude));
 
                 TextView titleView = (TextView) findViewById(R.id.bus_departure_title);
-                titleView.setText("Bus stop: " + busStopName_);
+                titleView.setText("Bus stop: " + busStopName);
 
-                new DownloadBusDepartureTask(this).execute(busStopCode_);
+                new DownloadBusDepartureTask(this).execute(busStopCode);
             }
         }
         else{
@@ -87,9 +98,33 @@ public class RealTimeActivity extends ListActivity {
         ((BussanApplication) getApplication()).attach(this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        super.onCreateOptionsMenu(menu);
+        //menu.setHeaderTitle("Menu"); // TODO: get the name of the bus stop here
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.busstopmenu, menu);
+
+        new BusStopMenuHandler().configureMenu(this, menu, busStop_);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (new BusStopMenuHandler().handleContextItemSelected(this, item, busStop_)) {
+            return true;
+        }
+        else {
+            return super.onContextItemSelected(item);
+        }
+    }
+
 
     public void onRefreshButtonClicked(View view) {
-        new DownloadBusDepartureTask(this).execute(busStopCode_);
+        new DownloadBusDepartureTask(this).execute(busStop_.getCode());
     }
 
     public ImageButton getRefreshButton() {

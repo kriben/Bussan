@@ -7,10 +7,7 @@ import no.kriben.busstopstrondheim.io.ProgressHandler;
 import no.kriben.busstopstrondheim.model.BusStop;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -19,7 +16,6 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -36,6 +32,8 @@ public abstract class BusStopListActivity extends ListActivity {
                 intent.putExtra("code", busStop.getCode());
                 intent.putExtra("name", busStop.getName());
                 intent.putExtra("id", busStop.getId());
+                intent.putExtra("latitude", busStop.getPosition().getLatitude());
+                intent.putExtra("longitude", busStop.getPosition().getLongitude());
                 startActivity(intent);
             }
         });
@@ -53,16 +51,7 @@ public abstract class BusStopListActivity extends ListActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
 
-        List<Integer> favorites = getSavedFavoriteBusStops();
-        boolean isFavorite = favorites.contains(busStop.getCode());
-        MenuItem addItem = menu.findItem(R.id.add_favorite);
-        addItem.setVisible(!isFavorite);
-
-        MenuItem removeItem = menu.findItem(R.id.remove_favorite);
-        removeItem.setVisible(isFavorite);
-
-        MenuItem showInMapItem = menu.findItem(R.id.show_in_map);
-        showInMapItem.setVisible(true);
+        new BusStopMenuHandler().configureMenu(this, menu, busStop);
     }
 
 
@@ -71,37 +60,8 @@ public abstract class BusStopListActivity extends ListActivity {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
 
-        int itemId = item.getItemId();
-        if (itemId == R.id.add_favorite) {
-            List<Integer> favorites = getSavedFavoriteBusStops();
-            favorites.add(busStop.getCode());
-            saveFavoriteBusStops(favorites);
-
-            Toast.makeText(this, "Added " + busStop.getName() + " to favorites!", Toast.LENGTH_LONG).show();
+        if (new BusStopMenuHandler().handleContextItemSelected(this, item, busStop)) {
             refreshBusStopListView();
-            return true;
-        }
-        else if (itemId == R.id.remove_favorite) {
-            List<Integer> favorites = getSavedFavoriteBusStops();
-            favorites.remove(new Integer(busStop.getCode()));
-            saveFavoriteBusStops(favorites);
-
-            Toast.makeText(this, "Removed " + busStop.getName() + " from favorites!", Toast.LENGTH_LONG).show();
-
-            refreshBusStopListView();
-            return true;
-        }
-        else if (itemId == R.id.show_in_map) {
-            // Use trick from here to center on a position with a marker
-            // http://stackoverflow.com/questions/2662531/launching-google-maps-directions-via-an-intent-on-android/4433117
-            String uri = "geo:0,0?q="+ busStop.getPosition().getLatitude() + "," + busStop.getPosition().getLongitude() + " (" + busStop.getName() + ")";
-            try {
-                startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
-            }
-            catch (ActivityNotFoundException e) {
-                Toast.makeText(this, "Unable to show location in map.", Toast.LENGTH_LONG).show();
-            }
-
             return true;
         }
         else {
@@ -109,18 +69,6 @@ public abstract class BusStopListActivity extends ListActivity {
         }
     }
 
-    private void saveFavoriteBusStops(List<Integer> favorites) {
-        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);
-        SharedPreferences.Editor prefEditor = settings.edit();
-        prefEditor.putString("favorites", PreferencesUtil.encodeBusStopString(favorites));
-        prefEditor.commit();
-
-    }
-
-    private List<Integer> getSavedFavoriteBusStops() {
-        SharedPreferences settings = getSharedPreferences("BusStopPreferences", MODE_PRIVATE);
-        return PreferencesUtil.decodeBusStopString(settings.getString("favorites", getString(R.string.default_busstops)));
-    }
 
     abstract protected void refreshBusStopListView();
     abstract protected void refreshBusStopListView(List<BusStop> busStops);
