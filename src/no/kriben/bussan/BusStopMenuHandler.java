@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class BusStopMenuHandler {
+    public enum Status { OK, FAILED, NOT_HANDLED, BUS_LIST_NEEDS_REFRESH };
+
     public void configureMenu(Activity activity, Menu menu, BusStop busStop) {
         List<Integer> favorites = getSavedFavoriteBusStops(activity);
         boolean isFavorite = favorites.contains(busStop.getCode());
@@ -26,7 +28,7 @@ public class BusStopMenuHandler {
         showInMapItem.setVisible(true);
     }
 
-    public boolean handleContextItemSelected(Activity activity, MenuItem item, BusStop busStop) {
+    public Status handleContextItemSelected(Activity activity, MenuItem item, BusStop busStop) {
         int itemId = item.getItemId();
         if (itemId == R.id.add_favorite) {
             List<Integer> favorites = getSavedFavoriteBusStops(activity);
@@ -34,7 +36,7 @@ public class BusStopMenuHandler {
             saveFavoriteBusStops(activity, favorites);
 
             Toast.makeText(activity, "Added " + busStop.getName() + " to favorites!", Toast.LENGTH_LONG).show();
-            return true;
+            return Status.BUS_LIST_NEEDS_REFRESH;
         }
         else if (itemId == R.id.remove_favorite) {
             List<Integer> favorites = getSavedFavoriteBusStops(activity);
@@ -42,7 +44,7 @@ public class BusStopMenuHandler {
             saveFavoriteBusStops(activity, favorites);
 
             Toast.makeText(activity, "Removed " + busStop.getName() + " from favorites!", Toast.LENGTH_LONG).show();
-            return true;
+            return Status.BUS_LIST_NEEDS_REFRESH;
         }
         else if (itemId == R.id.show_in_map) {
             // Use trick from here to center on a position with a marker
@@ -55,10 +57,10 @@ public class BusStopMenuHandler {
                 Toast.makeText(activity, "Unable to show location in map.", Toast.LENGTH_LONG).show();
             }
 
-            return true;
+            return Status.OK;
         }
         else {
-            return false;
+            return Status.NOT_HANDLED;
         }
     }
 

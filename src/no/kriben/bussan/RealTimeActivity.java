@@ -113,12 +113,12 @@ public class RealTimeActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (new BusStopMenuHandler().handleContextItemSelected(this, item, busStop_)) {
-            return true;
+        BusStopMenuHandler.Status status = new BusStopMenuHandler().handleContextItemSelected(this, item, busStop_);
+        if (status == BusStopMenuHandler.Status.NOT_HANDLED) {
+            return super.onContextItemSelected(item);
         }
         else {
-            return super.onContextItemSelected(item);
+            return (status == BusStopMenuHandler.Status.OK || status == BusStopMenuHandler.Status.BUS_LIST_NEEDS_REFRESH);
         }
     }
 

@@ -60,12 +60,16 @@ public abstract class BusStopListActivity extends ListActivity {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
 
-        if (new BusStopMenuHandler().handleContextItemSelected(this, item, busStop)) {
+        BusStopMenuHandler.Status status = new BusStopMenuHandler().handleContextItemSelected(this, item, busStop);
+        if (status == BusStopMenuHandler.Status.BUS_LIST_NEEDS_REFRESH) {
             refreshBusStopListView();
             return true;
         }
-        else {
+        else if (status == BusStopMenuHandler.Status.NOT_HANDLED) {
             return super.onContextItemSelected(item);
+        }
+        else {
+            return (status == BusStopMenuHandler.Status.OK);
         }
     }
 
