@@ -35,7 +35,7 @@ public class BusStopMenuHandler {
             favorites.add(busStop.getCode());
             saveFavoriteBusStops(activity, favorites);
 
-            Toast.makeText(activity, "Added " + busStop.getName() + " to favorites!", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, activity.getString(R.string.added) + " " + busStop.getName() +  " " + activity.getString(R.string.to_favorites), Toast.LENGTH_LONG).show();
             return Status.BUS_LIST_NEEDS_REFRESH;
         }
         else if (itemId == R.id.remove_favorite) {
@@ -43,7 +43,7 @@ public class BusStopMenuHandler {
             favorites.remove(new Integer(busStop.getCode()));
             saveFavoriteBusStops(activity, favorites);
 
-            Toast.makeText(activity, "Removed " + busStop.getName() + " from favorites!", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, activity.getString(R.string.removed) + " " + busStop.getName() + " " + activity.getString(R.string.from_favorites), Toast.LENGTH_LONG).show();
             return Status.BUS_LIST_NEEDS_REFRESH;
         }
         else if (itemId == R.id.show_in_map) {
@@ -54,7 +54,7 @@ public class BusStopMenuHandler {
                 activity.startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
             }
             catch (ActivityNotFoundException e) {
-                Toast.makeText(activity, "Unable to show location in map.", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, R.string.no_map, Toast.LENGTH_LONG).show();
             }
 
             return Status.OK;

@@ -6,7 +6,7 @@
         style="@style/HeaderTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Bussan: Closest bus stops"/>
+        android:text="@string/closest_bus_stops_title"/>
     
     <ListView android:id="@android:id/list" 
         android:layout_width="fill_parent"

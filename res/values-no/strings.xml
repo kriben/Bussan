@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="find_by_name">Alle busstopp</string>
+    <string name="find_closest">Finn nærmeste</string>
+    <string name="add_to_favorites">Legg til i Mine Busstopp</string>
+    <string name="remove_from_favorites">Fjern fra Mine Busstopp</string>
+    <string name="show_in_map">Vis i kart</string>
+    
+    <string name="front_page_title">Bussan: Mine busstopp</string>
+    <string name="all_bus_stops_title">Bussan: Alle busstopp</string>
+    <string name="closest_bus_stops_title">Bussan: Nærmeste busstopp</string>
+    <string name="search_box_hint">busstoppnavn</string>
+
+    <string name="favorite_title">Mine Busstopp</string>
+    <string name="finding_bus_stops">Finner busstopp.</string>
+    <string name="please_wait">Vennligst vent...</string>
+    <string name="added">La</string>
+    <string name="removed">Fjernet</string>
+    <string name="to_favorites">til i Mine Busstopp.</string>
+    <string name="from_favorites">fra Mine Busstopp.</string>
+    <string name="no_map">Klarte ikke å åpne kartet.</string>
+    <string name="finding_closest_bus_stops">Finner nærmeste busstopp.</string>
+    <string name="bus_stop">Busstopp</string>
+    <string name="connection_failed">Nettverksfeil</string>
+    <string name="missing_wifi">Trenger nettverk for å laste ned busstoppene. Åpne nettverksinnstillinger?</string>
+    <string name="accept">Ja</string>
+    <string name="cancel">Nei</string>
+    <string name="from_town">fra byen</string>
+    <string name="to_town">til byen</string>
+</resources>

@@ -1,10 +1,11 @@
 package no.kriben.bussan;
 
+import android.content.Context;
 import no.kriben.busstopstrondheim.model.BusStop;
 
 public class BusStopNameFormatter {
 
-    public static String format(BusStop busStop) {
+    public static String format(Context context, BusStop busStop) {
         // Try to construct a direction string:
         //   buses with id smaller than 1000 are going to town
         //   less than equal 1000 is leaving town
@@ -13,9 +14,9 @@ public class BusStopNameFormatter {
         int id = new Integer(busStop.getId()).intValue();
         if (id < 2000) {
             if (id < 1000)
-                direction = " (from town)";
+                direction = " (" + context.getString(R.string.from_town) + ")";
             else
-                direction = " (to town)";
+                direction = " (" + context.getString(R.string.to_town) + ")";
         }
         return busStop.getName() + direction;
     }

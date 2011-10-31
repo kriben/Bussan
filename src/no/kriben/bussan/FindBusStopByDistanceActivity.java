@@ -121,7 +121,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
             holder = (ViewHolder) convertView.getTag();
             TextView title = holder.getTitle();
-            title.setText(BusStopNameFormatter.format(busStop.getBusStop()));
+            title.setText(BusStopNameFormatter.format(getContext(), busStop.getBusStop()));
 
             TextView distanceView = holder.getDistance();
 
@@ -216,7 +216,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
             super.onPreExecute();
             if (progressDialog_ == null && !isFinishing()) {
                 progressDialog_ = ProgressDialog.show(FindBusStopByDistanceActivity.this, "",
-                                                      "Finding the closest bus stops. Please wait...");
+                                                      getString(R.string.finding_closest_bus_stops) + " " + getString(R.string.please_wait));
                 progressDialog_.setMax(locations_.size());
             }
         }

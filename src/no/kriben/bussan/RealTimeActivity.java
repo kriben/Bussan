@@ -59,7 +59,7 @@ public class RealTimeActivity extends ListActivity {
                 busStop_.setPosition(new Position(latitude, longitude));
 
                 TextView titleView = (TextView) findViewById(R.id.bus_departure_title);
-                titleView.setText("Bus stop: " + busStopName);
+                titleView.setText(getString(R.string.bus_stop) + ": " + busStopName);
 
                 new DownloadBusDepartureTask(this).execute(busStopCode);
             }
@@ -68,15 +68,14 @@ public class RealTimeActivity extends ListActivity {
             // as it seems there's no Internet connection
             // ask the user to activate it
             new AlertDialog.Builder(this)
-                .setTitle("Connection failed")
-                .setMessage("This application requires network access. Please, enable " +
-                            "mobile network or Wi-Fi.")
-                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.connection_failed)
+                .setMessage(R.string.missing_wifi)
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             RealTimeActivity.this.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
                         }
                     })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             RealTimeActivity.this.finish();
                         }

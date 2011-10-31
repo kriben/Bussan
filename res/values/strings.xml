@@ -2,4 +2,31 @@
 <resources>
     <string name="app_name">Bussan</string>
     <string name="default_busstops">"16011477,16011265,16011406"</string>
+    <string name="find_by_name">Find by name</string>
+    <string name="find_closest">Find closest</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="show_in_map">Show in map</string>
+
+    <string name="front_page_title">Bussan: Favorite bus stops</string>
+    <string name="all_bus_stops_title">Bussan: All bus stops</string>
+    <string name="closest_bus_stops_title">Bussan: Closest bus stops</string>
+    <string name="search_box_hint">type to filter</string>
+
+    <string name="favorite_title">Favorite</string>
+    <string name="finding_bus_stops">Finding bus stops.</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="added">Added</string>
+    <string name="removed">Removed</string>
+    <string name="to_favorites">to favorites.</string>
+    <string name="from_favorites">from favorites.</string>
+    <string name="no_map">Unable to show location in map.</string>
+    <string name="finding_closest_bus_stops">Finding the closest bus stops.</string>
+    <string name="bus_stop">Bus stop</string>
+    <string name="connection_failed">Connection failed</string>
+    <string name="missing_wifi">This application requires network access. Please, enable mobile network or Wi-Fi.</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="from_town">from town</string>
+    <string name="to_town">to town</string>
 </resources>

@@ -29,7 +29,7 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> implements BusStopArra
 
         holder = (ViewHolder) convertView.getTag();
         TextView title = holder.getTitle();
-        title.setText(BusStopNameFormatter.format(busStop));
+        title.setText(BusStopNameFormatter.format(getContext(), busStop));
 
         return convertView;
     }

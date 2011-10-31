@@ -44,7 +44,7 @@ public abstract class BusStopListActivity extends ListActivity {
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("Favorite"); // TODO: get the name of the bus stop here
+        menu.setHeaderTitle(R.string.favorite_title);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.busstopmenu, menu);
 
@@ -97,7 +97,7 @@ public abstract class BusStopListActivity extends ListActivity {
     private class DownloadBusStopsTask extends BussanAsyncTask<Void, Integer, List<BusStop>> implements ProgressHandler
     {
         private ProgressDialog progressDialog_ = null;
-        private String message_ = "";
+        private String message_ = getString(R.string.finding_bus_stops) + "\n" + getString(R.string.please_wait);
         private double completeFraction_ = 0.0;
 
         public DownloadBusStopsTask(BusStopListActivity activity) {
@@ -125,8 +125,7 @@ public abstract class BusStopListActivity extends ListActivity {
 
         protected void showProgressDialog() {
             if (progressDialog_ == null) {
-                progressDialog_ = ProgressDialog.show(BusStopListActivity.this, "",
-                                                      "Finding bus stops. Please wait...");
+                progressDialog_ = ProgressDialog.show(BusStopListActivity.this, "", message_);
                 progressDialog_.setMax(100);
             }
         }
@@ -179,7 +178,7 @@ public abstract class BusStopListActivity extends ListActivity {
         @Override
         public void setProgress(double completeFraction, String message) {
             completeFraction_ = completeFraction;
-            message_ = message;
+            //message_ = message;
 
             int asInt = (int) (completeFraction * 100.0);
             Integer[] fractions = { asInt };

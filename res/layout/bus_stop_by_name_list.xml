@@ -8,13 +8,13 @@
         style="@style/HeaderTextView" 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Bussan: All bus stops"/>
+        android:text="@string/all_bus_stops_title"/>
 
     <!-- Pretty hint text, and maxLines -->
     <EditText android:id="@+id/search_box" 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="type to filter"
+        android:hint="@string/search_box_hint"
         android:inputType="text"
         android:maxLines="1"/>
 
