@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="find_by_name">Alle busstopp</string>
+    <string name="find_by_name">Søk med navn</string>
     <string name="find_closest">Finn nærmeste</string>
     <string name="add_to_favorites">Legg til i Mine Busstopp</string>
     <string name="remove_from_favorites">Fjern fra Mine Busstopp</string>
@@ -9,7 +9,7 @@
     <string name="front_page_title">Bussan: Mine busstopp</string>
     <string name="all_bus_stops_title">Bussan: Alle busstopp</string>
     <string name="closest_bus_stops_title">Bussan: Nærmeste busstopp</string>
-    <string name="search_box_hint">busstoppnavn</string>
+    <string name="search_box_hint">Filtertekst</string>
 
     <string name="favorite_title">Mine Busstopp</string>
     <string name="finding_bus_stops">Finner busstopp.</string>
