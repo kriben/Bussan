@@ -216,7 +216,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
             super.onPreExecute();
             if (progressDialog_ == null && !isFinishing()) {
                 progressDialog_ = ProgressDialog.show(FindBusStopByDistanceActivity.this, "",
-                                                      getString(R.string.finding_closest_bus_stops) + " " + getString(R.string.please_wait));
+                                                      getString(R.string.finding_closest_bus_stops) + "\n" + getString(R.string.please_wait));
                 progressDialog_.setMax(locations_.size());
             }
         }
