@@ -16,10 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import no.kriben.busstopstrondheim.model.BusDeparture;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.model.Position;
@@ -62,6 +64,19 @@ public class RealTimeActivity extends ListActivity {
                 titleView.setText(getString(R.string.bus_stop) + ": " + busStopName);
 
                 new DownloadBusDepartureTask(this).execute(busStopCode);
+                
+                lv.setOnItemClickListener(new OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        BusDeparture busDeparture = ((BusDepartureArrayAdapter) getListAdapter()).getBusDeparture(position);
+                        Intent intent = new Intent(view.getContext(), BusDepartureDetailActivity.class);
+                        intent.putExtra("busstop", busStop_.getName());
+                        intent.putExtra("line", busDeparture.getLine());
+                        intent.putExtra("scheduledTime", busDeparture.getScheduledTime());
+                        intent.putExtra("estimatedTime", busDeparture.getEstimatedTime());
+                        intent.putExtra("destination", busDeparture.getDestination());
+                        startActivity(intent);
+                    }
+                });
             }
         }
         else{
@@ -82,6 +97,9 @@ public class RealTimeActivity extends ListActivity {
                     })
                 .show();
         }
+        
+        
+        
     }
 
 
@@ -130,8 +148,8 @@ public class RealTimeActivity extends ListActivity {
         return refreshButton_;
     }
 
-    private class CustomAdapter extends ArrayAdapter<BusDeparture> {
-        public CustomAdapter(Context context,
+    private class BusDepartureArrayAdapter extends ArrayAdapter<BusDeparture> {
+        public BusDepartureArrayAdapter(Context context,
                              int resource,
                              int textViewResourceId,
                              List<BusDeparture> objects) {
@@ -162,7 +180,10 @@ public class RealTimeActivity extends ListActivity {
 
             return convertView;
         }
-
+        
+        public BusDeparture getBusDeparture(int position) {
+            return getItem(position);
+        }
 
         private class ViewHolder {
             private View row_;
@@ -219,7 +240,7 @@ public class RealTimeActivity extends ListActivity {
         protected void onPostExecute(List<BusDeparture> busDepartures) {
             super.onPostExecute(busDepartures);
             if (activity_ != null) {
-                setListAdapter(new CustomAdapter(activity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
+                setListAdapter(new BusDepartureArrayAdapter(activity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
                 ((RealTimeActivity) activity_).getRefreshButton().setEnabled(true);
             }
         }

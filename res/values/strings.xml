@@ -11,6 +11,7 @@
     <string name="front_page_title">Bussan: Favorite bus stops</string>
     <string name="all_bus_stops_title">Bussan: All bus stops</string>
     <string name="closest_bus_stops_title">Bussan: Closest bus stops</string>
+    <string name="bus_departure_detail_title">Bussan: Bus departure</string>
     <string name="search_box_hint">type to filter</string>
 
     <string name="favorite_title">Favorite</string>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical" android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+  <TextView android:id="@+id/busdeparturetitle" style="@style/HeaderTextView"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:text="@string/bus_departure_detail_title" />
+
+  <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView android:textSize="30sp" android:layout_width="wrap_content"
+              android:text="Line:" android:layout_height="wrap_content"></TextView>
+    <TextView android:paddingRight="10sp" android:layout_width="wrap_content"
+              android:textSize="30sp" android:textStyle="bold" android:id="@+id/line"
+              android:layout_height="wrap_content" android:layout_alignParentRight="true"></TextView>
+  </RelativeLayout>
+
+  <RelativeLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+    <TextView android:textSize="30sp" android:text="From:" android:layout_width="wrap_content"
+              android:layout_height="wrap_content"></TextView>
+    <TextView android:layout_width="wrap_content"
+              android:textSize="30sp" android:layout_height="wrap_content" android:id="@+id/from"
+              android:paddingRight="10sp" android:layout_alignParentRight="true"></TextView>
+  </RelativeLayout>
+
+  <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView android:layout_width="wrap_content"
+              android:textSize="30sp" android:text="To:" android:layout_height="wrap_content"></TextView>
+    <TextView android:paddingLeft="10sp" android:layout_width="wrap_content"
+              android:textSize="30sp" android:id="@+id/destination"
+              android:paddingRight="10sp" android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"></TextView>
+  </RelativeLayout>
+
+  <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView android:layout_width="wrap_content"
+              android:textSize="30sp" android:layout_height="wrap_content"
+              android:text="Scheduled:"></TextView>
+    <TextView android:layout_width="wrap_content"
+              android:textSize="30sp" android:textStyle="bold" android:id="@+id/scheduledtime"
+              android:paddingRight="10sp" android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"></TextView>
+  </RelativeLayout>
+
+  <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView android:layout_width="wrap_content"
+              android:textSize="30sp" android:layout_height="wrap_content"
+              android:text="Estimated:"></TextView>
+    <TextView android:layout_width="wrap_content"
+              android:textSize="30sp" android:textStyle="bold" android:id="@+id/estimatedtime"
+              android:paddingRight="10sp" android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"></TextView>
+  </RelativeLayout>
+</LinearLayout>

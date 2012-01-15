@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="no.kriben.bussan" android:versionCode="6"
-	android:versionName="1.0.5">
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-sdk android:minSdkVersion="8" />
+        package="no.kriben.bussan" android:versionCode="6"
+        android:versionName="1.0.5">
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-sdk android:minSdkVersion="8" />
 
-	<application android:icon="@drawable/icon" android:label="@string/app_name" android:name="BussanApplication">
-		<activity android:name=".FrontpageActivity" android:label="@string/app_name" 
-		          android:theme="@android:style/Theme.Black.NoTitleBar">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<activity android:name=".RealTimeActivity" android:label="Bussan: Bus stop"
-		          android:theme="@android:style/Theme.Black.NoTitleBar">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
-			</intent-filter>
-		</activity>
-		<activity android:name=".FindBusStopByNameActivity"
-			android:label="Bussan: All bus stops"
-			android:theme="@android:style/Theme.Black.NoTitleBar">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
-			</intent-filter>
-		</activity>
-		<activity android:name=".FindBusStopByDistanceActivity"
-			android:label="Bussan: Closest bus stops"
-			android:theme="@android:style/Theme.Black.NoTitleBar">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
-			</intent-filter>
-		</activity>
-	</application>
+        <application android:icon="@drawable/icon" android:label="@string/app_name" android:name="BussanApplication">
+                <activity android:name=".FrontpageActivity" android:label="@string/app_name" 
+                          android:theme="@android:style/Theme.Black.NoTitleBar">
+                        <intent-filter>
+                                <action android:name="android.intent.action.MAIN" />
+                                <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+                </activity>
+                <activity android:name=".RealTimeActivity" android:label="Bussan: Bus stop"
+                          android:theme="@android:style/Theme.Black.NoTitleBar">
+                        <intent-filter>
+                                <action android:name="android.intent.action.VIEW" />
+                                <category android:name="android.intent.category.DEFAULT" />
+                                <data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
+                        </intent-filter>
+                </activity>
+                <activity android:name=".FindBusStopByNameActivity"
+                        android:label="Bussan: All bus stops"
+                        android:theme="@android:style/Theme.Black.NoTitleBar">
+                        <intent-filter>
+                                <action android:name="android.intent.action.VIEW" />
+                                <category android:name="android.intent.category.DEFAULT" />
+                                <data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
+                        </intent-filter>
+                </activity>
+                <activity android:name=".FindBusStopByDistanceActivity"
+                        android:label="Bussan: Closest bus stops"
+                        android:theme="@android:style/Theme.Black.NoTitleBar">
+                        <intent-filter>
+                                <action android:name="android.intent.action.VIEW" />
+                                <category android:name="android.intent.category.DEFAULT" />
+                                <data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
+                        </intent-filter>
+                </activity>
+                <activity android:name=".BusDepartureDetailActivity"
+                          android:label="Bussan: Bus Departure"
+                          android:theme="@android:style/Theme.Black.NoTitleBar">
+                  <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
+                  </intent-filter>
+                </activity>
+        </application>
 </manifest>
