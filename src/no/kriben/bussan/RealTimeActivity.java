@@ -158,7 +158,7 @@ public class RealTimeActivity extends ListActivity {
             destination.setText(departure.getDestination());
 
             TextView departureTime = holder.getDepartureTime();
-            departureTime.setText( departure.getTime());
+            departureTime.setText(departure.getEstimatedTime());
 
             return convertView;
         }
