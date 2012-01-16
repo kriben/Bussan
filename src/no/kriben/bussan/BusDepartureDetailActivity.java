@@ -10,7 +10,7 @@ public class BusDepartureDetailActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_departure_detail);
-        
+
         final TextView lineView = (TextView) findViewById(R.id.line);
         final TextView fromView = (TextView) findViewById(R.id.from);
         final TextView destinationView = (TextView) findViewById(R.id.destination);
@@ -21,9 +21,14 @@ public class BusDepartureDetailActivity extends Activity {
             lineView.setText(extras.getString("line"));
             fromView.setText(extras.getString("busstop"));
             destinationView.setText(extras.getString("destination"));
-            scheduledTimeView.setText(extras.getString("scheduledTime"));
-            scheduledTimeView.setPaintFlags(scheduledTimeView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            estimatedTimeView.setText(extras.getString("estimatedTime"));
+
+            final String scheduledTime = extras.getString("scheduledTime");
+            final String estimatedTime = extras.getString("estimatedTime");
+            scheduledTimeView.setText(scheduledTime);
+            if (!estimatedTime.equals(scheduledTime)) {
+                scheduledTimeView.setPaintFlags(scheduledTimeView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+            estimatedTimeView.setText(estimatedTime);
         }
     }
 }

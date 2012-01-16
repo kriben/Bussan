@@ -173,13 +173,17 @@ public class RealTimeActivity extends ListActivity {
             TextView destination = holder.getDestination();
             destination.setText(departure.getDestination());
 
-            TextView departureTime = holder.getDepartureTime();
-            departureTime.setText(departure.getEstimatedTime());
+            TextView estimatedTimeView = holder.getEstimatedTimeView();
+            final String estimatedTime = departure.getEstimatedTime();
+            estimatedTimeView.setText(estimatedTime);
 
-            TextView scheduledTime = holder.getScheduledTime();
-            scheduledTime.setPaintFlags(scheduledTime.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            scheduledTime.setText(departure.getScheduledTime());
-
+            TextView scheduledTimeView = holder.getScheduledTimeView();
+            final String scheduledTime = departure.getScheduledTime();
+            if (!estimatedTime.equals(scheduledTime)) {
+                scheduledTimeView.setPaintFlags(scheduledTimeView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+            scheduledTimeView.setText(scheduledTime);
+            
             return convertView;
         }
 
@@ -191,20 +195,27 @@ public class RealTimeActivity extends ListActivity {
             private View row_;
             private TextView line_ = null;
             private TextView destination_ = null;
-            private TextView departureTime_ = null;
-            private TextView scheduledTime_ = null;
+            private TextView estimatedTimeView_ = null;
+            private TextView scheduledTimeView_ = null;
 
             public ViewHolder(View row) {
                 row_ = row;
             }
 
-            public TextView getScheduledTime() {
-                if (scheduledTime_ == null) {
-                    scheduledTime_ = (TextView) row_.findViewById(R.id.scheduledtime);
+            public TextView getScheduledTimeView() {
+                if (scheduledTimeView_ == null) {
+                    scheduledTimeView_ = (TextView) row_.findViewById(R.id.scheduledtime);
                 }
-                return scheduledTime_;
+                return scheduledTimeView_;
             }
 
+            public TextView getEstimatedTimeView() {
+                if (estimatedTimeView_ == null) {
+                    estimatedTimeView_ = (TextView) row_.findViewById(R.id.departuretime);
+                }
+                return estimatedTimeView_;
+            }
+            
             public TextView getLine() {
                 if (line_ == null){
                     line_ = (TextView) row_.findViewById(R.id.line);
@@ -217,13 +228,6 @@ public class RealTimeActivity extends ListActivity {
                     destination_ = (TextView) row_.findViewById(R.id.destination);
                 }
                 return destination_;
-            }
-
-            public TextView getDepartureTime() {
-                if (departureTime_ == null) {
-                    departureTime_ = (TextView) row_.findViewById(R.id.departuretime);
-                }
-                return departureTime_;
             }
         }
     }
