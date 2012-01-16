@@ -16,8 +16,10 @@ public class BusDepartureDetailActivity extends Activity {
         final TextView destinationView = (TextView) findViewById(R.id.destination);
         final TextView scheduledTimeView = (TextView) findViewById(R.id.scheduledtime);
         final TextView estimatedTimeView = (TextView) findViewById(R.id.estimatedtime);
+        final TextView headerView = (TextView) findViewById(R.id.busdeparturetitle);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            headerView.setText("Bussan: " + extras.getString("busstop"));
             lineView.setText(extras.getString("line"));
             fromView.setText(extras.getString("busstop"));
             destinationView.setText(extras.getString("destination"));
