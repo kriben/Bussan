@@ -27,4 +27,9 @@
     <string name="cancel">Nei</string>
     <string name="from_town">fra byen</string>
     <string name="to_town">til byen</string>
+    <string name="to">Til:</string>
+    <string name="from">Fra:</string>
+    <string name="scheduled">Rutetid:</string>
+    <string name="estimated">Estimert:</string>
+    <string name="line">Rute:</string>
 </resources>

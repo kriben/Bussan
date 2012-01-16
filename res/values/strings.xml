@@ -30,4 +30,9 @@
     <string name="cancel">Cancel</string>
     <string name="from_town">from town</string>
     <string name="to_town">to town</string>
+    <string name="to">To:</string>
+    <string name="from">From:</string>
+    <string name="scheduled">Scheduled:</string>
+    <string name="estimated">Estimated:</string>
+    <string name="line">Line:</string>
 </resources>
