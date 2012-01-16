@@ -8,6 +8,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
@@ -64,7 +65,7 @@ public class RealTimeActivity extends ListActivity {
                 titleView.setText(getString(R.string.bus_stop) + ": " + busStopName);
 
                 new DownloadBusDepartureTask(this).execute(busStopCode);
-                
+
                 lv.setOnItemClickListener(new OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         BusDeparture busDeparture = ((BusDepartureArrayAdapter) getListAdapter()).getBusDeparture(position);
@@ -97,9 +98,6 @@ public class RealTimeActivity extends ListActivity {
                     })
                 .show();
         }
-        
-        
-        
     }
 
 
@@ -178,9 +176,13 @@ public class RealTimeActivity extends ListActivity {
             TextView departureTime = holder.getDepartureTime();
             departureTime.setText(departure.getEstimatedTime());
 
+            TextView scheduledTime = holder.getScheduledTime();
+            scheduledTime.setPaintFlags(scheduledTime.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            scheduledTime.setText(departure.getScheduledTime());
+
             return convertView;
         }
-        
+
         public BusDeparture getBusDeparture(int position) {
             return getItem(position);
         }
@@ -190,9 +192,17 @@ public class RealTimeActivity extends ListActivity {
             private TextView line_ = null;
             private TextView destination_ = null;
             private TextView departureTime_ = null;
+            private TextView scheduledTime_ = null;
 
             public ViewHolder(View row) {
                 row_ = row;
+            }
+
+            public TextView getScheduledTime() {
+                if (scheduledTime_ == null) {
+                    scheduledTime_ = (TextView) row_.findViewById(R.id.scheduledtime);
+                }
+                return scheduledTime_;
             }
 
             public TextView getLine() {
