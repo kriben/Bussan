@@ -33,9 +33,11 @@ public class FrontpageActivity extends BusStopListActivity {
 
     private List<BusStop> filterByCode(List<Integer> codes, List<BusStop> allBusStops) {
         List<BusStop> filteredBusStops = new ArrayList<BusStop>();
-        for (BusStop busStop : allBusStops) {
-            if (codes.contains(busStop.getCode()))
-                filteredBusStops.add(busStop);
+        if (allBusStops != null) {
+            for (BusStop busStop : allBusStops) {
+                if (codes.contains(busStop.getCode()))
+                    filteredBusStops.add(busStop);
+            }
         }
 
         return filteredBusStops;
