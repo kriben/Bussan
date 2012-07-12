@@ -5,21 +5,21 @@ import java.util.List;
 import no.kriben.busstopstrondheim.io.BusStopRepository;
 import no.kriben.busstopstrondheim.io.ProgressHandler;
 import no.kriben.busstopstrondheim.model.BusStop;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import com.actionbarsherlock.app.SherlockListActivity;
 
-public abstract class BusStopListActivity extends ListActivity {
+
+
+public abstract class BusStopListActivity extends SherlockListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +42,10 @@ public abstract class BusStopListActivity extends ListActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenuInfo menuInfo) {
+            ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle(R.string.favorite_title);
-        MenuInflater inflater = getMenuInflater();
+        android.view.MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.busstopmenu, menu);
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
@@ -56,10 +56,10 @@ public abstract class BusStopListActivity extends ListActivity {
 
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(android.view.MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         BusStop busStop = ((BusStopArrayAdapter) getListAdapter()).getBusStop(info.position);
-
+        
         BusStopMenuHandler.Status status = new BusStopMenuHandler().handleContextItemSelected(this, item, busStop);
         if (status == BusStopMenuHandler.Status.BUS_LIST_NEEDS_REFRESH) {
             refreshBusStopListView();

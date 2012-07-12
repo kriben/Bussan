@@ -1,11 +1,12 @@
 package no.kriben.bussan;
 
-import android.app.Activity;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.ActionBar;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class BusDepartureDetailActivity extends Activity {
+public class BusDepartureDetailActivity extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,10 +17,11 @@ public class BusDepartureDetailActivity extends Activity {
         final TextView destinationView = (TextView) findViewById(R.id.destination);
         final TextView scheduledTimeView = (TextView) findViewById(R.id.scheduledtime);
         final TextView estimatedTimeView = (TextView) findViewById(R.id.estimatedtime);
-        final TextView headerView = (TextView) findViewById(R.id.busdeparturetitle);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            headerView.setText("Bussan: " + extras.getString("busstop"));
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("Bussan: " + extras.getString("busstop"));
             lineView.setText(extras.getString("line"));
             fromView.setText(extras.getString("busstop"));
             destinationView.setText(extras.getString("destination"));

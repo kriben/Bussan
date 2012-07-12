@@ -2,9 +2,14 @@ package no.kriben.bussan;
 
 import java.util.List;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,14 +17,11 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,10 +32,10 @@ import no.kriben.busstopstrondheim.io.BusDepartureRepository;
 
 
 
-public class RealTimeActivity extends ListActivity {
+public class RealTimeActivity extends SherlockListActivity {
 
     private BusStop busStop_ = null;
-    private ImageButton refreshButton_ = null;
+    //private ImageButton refreshButton_ = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -46,8 +48,8 @@ public class RealTimeActivity extends ListActivity {
             ListView lv = getListView();
             lv.setTextFilterEnabled(true);
 
-            refreshButton_ = (ImageButton) findViewById(R.id.refresh_button);
-            refreshButton_.setEnabled(false);
+            //refreshButton_ = (ImageButton) findViewById(R.id.refresh_button);
+            //refreshButton_.setEnabled(false);
 
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
@@ -61,8 +63,8 @@ public class RealTimeActivity extends ListActivity {
                 busStop_ = new BusStop(busStopName, busStopId, busStopCode);
                 busStop_.setPosition(new Position(latitude, longitude));
 
-                TextView titleView = (TextView) findViewById(R.id.bus_departure_title);
-                titleView.setText(getString(R.string.bus_stop) + ": " + busStopName);
+                ActionBar actionBar = getSupportActionBar();
+                actionBar.setTitle(busStopName);
 
                 new DownloadBusDepartureTask(this).execute(busStopCode);
 
@@ -115,36 +117,37 @@ public class RealTimeActivity extends ListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         super.onCreateOptionsMenu(menu);
         //menu.setHeaderTitle("Menu"); // TODO: get the name of the bus stop here
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
         inflater.inflate(R.menu.busstopmenu, menu);
 
-        new BusStopMenuHandler().configureMenu(this, menu, busStop_);
+        new BusStopMenuHandler().configureMenu(this, menu, busStop_, true);
         return true;
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+System.out.println("JUNK!!!");       
         BusStopMenuHandler.Status status = new BusStopMenuHandler().handleContextItemSelected(this, item, busStop_);
         if (status == BusStopMenuHandler.Status.NOT_HANDLED) {
-            return super.onContextItemSelected(item);
+            if (item.getItemId() == R.id.refresh) {
+                refreshDepartureTimes();
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
         }
         else {
             return (status == BusStopMenuHandler.Status.OK || status == BusStopMenuHandler.Status.BUS_LIST_NEEDS_REFRESH);
         }
     }
 
-
-    public void onRefreshButtonClicked(View view) {
+    
+    public void refreshDepartureTimes() {
         new DownloadBusDepartureTask(this).execute(busStop_.getCode());
     }
 
-    public ImageButton getRefreshButton() {
-        return refreshButton_;
-    }
 
     private class BusDepartureArrayAdapter extends ArrayAdapter<BusDeparture> {
         public BusDepartureArrayAdapter(Context context,
@@ -238,7 +241,7 @@ public class RealTimeActivity extends ListActivity {
 
         public DownloadBusDepartureTask(RealTimeActivity activity) {
             super(activity);
-            activity.getRefreshButton().setEnabled(false);
+            //activity.getRefreshButton().setEnabled(false);
         }
 
         /** The system calls this to perform work in a worker thread and
@@ -255,7 +258,7 @@ public class RealTimeActivity extends ListActivity {
             super.onPostExecute(busDepartures);
             if (activity_ != null) {
                 setListAdapter(new BusDepartureArrayAdapter(activity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
-                ((RealTimeActivity) activity_).getRefreshButton().setEnabled(true);
+                //((RealTimeActivity) activity_).getRefreshButton().setEnabled(true);
             }
         }
     }

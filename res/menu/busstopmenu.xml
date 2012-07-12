@@ -2,11 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/add_favorite"
           android:icon="@drawable/ic_menu_star"
-          android:title="@string/add_to_favorites" />
+          android:title="@string/add_to_favorites"
+          android:showAsAction="ifRoom" />
      <item android:id="@+id/remove_favorite"
           android:icon="@drawable/ic_menu_delete"
-          android:title="@string/remove_from_favorites" />
+          android:title="@string/remove_from_favorites"
+          android:showAsAction="ifRoom" />
      <item android:id="@+id/show_in_map"
           android:icon="@drawable/ic_dialog_map"
-          android:title="@string/show_in_map" />
+          android:title="@string/show_in_map"
+          android:showAsAction="ifRoom" />
+     <item android:id="@+id/refresh"
+          android:icon="@drawable/ic_menu_refresh"
+          android:title="@string/refresh"
+          android:showAsAction="always" />     
 </menu>

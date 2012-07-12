@@ -6,11 +6,11 @@ import java.util.List;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.ListView;
 import no.kriben.busstopstrondheim.model.BusStop;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class FrontpageActivity extends BusStopListActivity {
     @Override
@@ -57,7 +57,7 @@ public class FrontpageActivity extends BusStopListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
         inflater.inflate(R.menu.frontpagemenu, menu);
         return true;
     }

@@ -7,7 +7,8 @@
     <string name="add_to_favorites">Add to favorites</string>
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="show_in_map">Show in map</string>
-
+    <string name="refresh">Refresh</string>
+    
     <string name="front_page_title">Bussan: Favorite bus stops</string>
     <string name="all_bus_stops_title">Bussan: All bus stops</string>
     <string name="closest_bus_stops_title">Bussan: Closest bus stops</string>
