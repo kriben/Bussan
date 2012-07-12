@@ -69,7 +69,7 @@ public class BusStopMenuHandler {
         }
         else if (itemId == R.id.remove_favorite) {
             List<Integer> favorites = getSavedFavoriteBusStops(activity);
-            favorites.remove(new Integer(busStop.getCode()));
+            favorites.remove(Integer.valueOf(busStop.getCode()));
             saveFavoriteBusStops(activity, favorites);
 
             Toast.makeText(activity, activity.getString(R.string.removed) + " " + busStop.getName() + " " + activity.getString(R.string.from_favorites), Toast.LENGTH_LONG).show();
