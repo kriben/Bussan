@@ -2,12 +2,10 @@ package no.kriben.bussan;
 
 import java.util.List;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockListActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
+import no.kriben.busstopstrondheim.io.BusDepartureRepository;
+import no.kriben.busstopstrondheim.model.BusDeparture;
+import no.kriben.busstopstrondheim.model.BusStop;
+import no.kriben.busstopstrondheim.model.Position;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,25 +15,29 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import no.kriben.busstopstrondheim.model.BusDeparture;
-import no.kriben.busstopstrondheim.model.BusStop;
-import no.kriben.busstopstrondheim.model.Position;
-import no.kriben.busstopstrondheim.io.BusDepartureRepository;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 
 
 public class RealTimeActivity extends SherlockListActivity {
 
     private BusStop busStop_ = null;
-    //private ImageButton refreshButton_ = null;
+    private MenuItem refreshItem_ = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -47,9 +49,6 @@ public class RealTimeActivity extends SherlockListActivity {
             // do things if it there's network connection
             ListView lv = getListView();
             lv.setTextFilterEnabled(true);
-
-            //refreshButton_ = (ImageButton) findViewById(R.id.refresh_button);
-            //refreshButton_.setEnabled(false);
 
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
@@ -128,11 +127,11 @@ public class RealTimeActivity extends SherlockListActivity {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-System.out.println("JUNK!!!");       
+    public boolean onOptionsItemSelected(MenuItem item) {   
         BusStopMenuHandler.Status status = new BusStopMenuHandler().handleContextItemSelected(this, item, busStop_);
         if (status == BusStopMenuHandler.Status.NOT_HANDLED) {
             if (item.getItemId() == R.id.refresh) {
+                startRefreshAnimation(item);
                 refreshDepartureTimes();
                 return true;
             }
@@ -147,7 +146,28 @@ System.out.println("JUNK!!!");
     public void refreshDepartureTimes() {
         new DownloadBusDepartureTask(this).execute(busStop_.getCode());
     }
+    
+    public void startRefreshAnimation(MenuItem refreshItem) {
+        // Animate the refresh button using rotating image view. Taken from
+        // http://stackoverflow.com/questions/9731602/animated-icon-for-actionitem
+        refreshItem_ = refreshItem;
+        
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ImageView imageView = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
 
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.clockwise_refresh);
+        rotation.setRepeatCount(Animation.INFINITE);
+        imageView.startAnimation(rotation);
+        
+        refreshItem.setActionView(imageView);
+    }
+
+    public void stopRefreshAnimation() {
+        if (refreshItem_ != null && refreshItem_.getActionView() != null) {
+            refreshItem_.getActionView().clearAnimation();
+            refreshItem_.setActionView(null);
+        }
+    }
 
     private class BusDepartureArrayAdapter extends ArrayAdapter<BusDeparture> {
         public BusDepartureArrayAdapter(Context context,
@@ -258,7 +278,7 @@ System.out.println("JUNK!!!");
             super.onPostExecute(busDepartures);
             if (activity_ != null) {
                 setListAdapter(new BusDepartureArrayAdapter(activity_.getBaseContext(), R.layout.bus_departure_list_item, R.id.line, busDepartures));
-                //((RealTimeActivity) activity_).getRefreshButton().setEnabled(true);
+                ((RealTimeActivity) activity_).stopRefreshAnimation();
             }
         }
     }
