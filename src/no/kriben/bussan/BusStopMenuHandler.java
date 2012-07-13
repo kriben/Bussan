@@ -29,6 +29,9 @@ public class BusStopMenuHandler {
         
         MenuItem refreshItem = menu.findItem(R.id.refresh);
         refreshItem.setVisible(false);
+        
+        MenuItem toggleItem = menu.findItem(R.id.toggle_favorite);
+        toggleItem.setVisible(false);
     }
     
     // TODO: duplicated code ===> remove
@@ -36,10 +39,20 @@ public class BusStopMenuHandler {
         List<Integer> favorites = getSavedFavoriteBusStops(activity);
         boolean isFavorite = favorites.contains(busStop.getCode());
         com.actionbarsherlock.view.MenuItem addItem = menu.findItem(R.id.add_favorite);
-        addItem.setVisible(!isFavorite);
-
+        addItem.setVisible(false);
+        
         com.actionbarsherlock.view.MenuItem removeItem = menu.findItem(R.id.remove_favorite);
-        removeItem.setVisible(isFavorite);
+        removeItem.setVisible(false);
+
+        com.actionbarsherlock.view.MenuItem toggleItem = menu.findItem(R.id.toggle_favorite);
+        if (isFavorite) {
+            toggleItem.setIcon(R.drawable.ic_menu_star_solid);
+            toggleItem.setTitle(activity.getString(R.string.remove_from_favorites));
+        }
+        else {
+            toggleItem.setIcon(R.drawable.ic_menu_star_hollow);
+            toggleItem.setTitle(activity.getString(R.string.add_to_favorites));
+        }
 
         com.actionbarsherlock.view.MenuItem showInMapItem = menu.findItem(R.id.show_in_map);
         showInMapItem.setVisible(true);
@@ -60,19 +73,22 @@ public class BusStopMenuHandler {
     
     private Status handleItemSelected(Activity activity, int itemId, BusStop busStop) {
         if (itemId == R.id.add_favorite) {
-            List<Integer> favorites = getSavedFavoriteBusStops(activity);
-            favorites.add(busStop.getCode());
-            saveFavoriteBusStops(activity, favorites);
-
-            Toast.makeText(activity, activity.getString(R.string.added) + " " + busStop.getName() +  " " + activity.getString(R.string.to_favorites), Toast.LENGTH_LONG).show();
+            addBusStopToFavorites(activity, busStop);
             return Status.BUS_LIST_NEEDS_REFRESH;
         }
         else if (itemId == R.id.remove_favorite) {
+            removeBusStopFromFavorites(activity, busStop);
+            return Status.BUS_LIST_NEEDS_REFRESH;
+        }
+        else if (itemId == R.id.toggle_favorite) {
             List<Integer> favorites = getSavedFavoriteBusStops(activity);
-            favorites.remove(Integer.valueOf(busStop.getCode()));
-            saveFavoriteBusStops(activity, favorites);
-
-            Toast.makeText(activity, activity.getString(R.string.removed) + " " + busStop.getName() + " " + activity.getString(R.string.from_favorites), Toast.LENGTH_LONG).show();
+            boolean isFavorite = favorites.contains(busStop.getCode());
+            if (isFavorite) {
+                removeBusStopFromFavorites(activity, busStop);
+            }
+            else {
+                addBusStopToFavorites(activity, busStop);
+            }
             return Status.BUS_LIST_NEEDS_REFRESH;
         }
         else if (itemId == R.id.show_in_map) {
@@ -91,6 +107,22 @@ public class BusStopMenuHandler {
         else {
             return Status.NOT_HANDLED;
         }
+    }
+
+    private void addBusStopToFavorites(Activity activity, BusStop busStop) {
+        List<Integer> favorites = getSavedFavoriteBusStops(activity);
+        favorites.add(busStop.getCode());
+        saveFavoriteBusStops(activity, favorites);
+
+        Toast.makeText(activity, activity.getString(R.string.added) + " " + busStop.getName() +  " " + activity.getString(R.string.to_favorites), Toast.LENGTH_LONG).show();
+    }
+
+    private void removeBusStopFromFavorites(Activity activity, BusStop busStop) {
+        List<Integer> favorites = getSavedFavoriteBusStops(activity);
+        favorites.remove(Integer.valueOf(busStop.getCode()));
+        saveFavoriteBusStops(activity, favorites);
+
+        Toast.makeText(activity, activity.getString(R.string.removed) + " " + busStop.getName() + " " + activity.getString(R.string.from_favorites), Toast.LENGTH_LONG).show();
     }
 
 

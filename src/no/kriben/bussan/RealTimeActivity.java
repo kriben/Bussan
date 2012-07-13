@@ -137,6 +137,10 @@ public class RealTimeActivity extends SherlockListActivity {
             }
             return super.onOptionsItemSelected(item);
         }
+        else if (status == BusStopMenuHandler.Status.BUS_LIST_NEEDS_REFRESH) {
+            invalidateOptionsMenu();
+            return true;
+        }
         else {
             return (status == BusStopMenuHandler.Status.OK || status == BusStopMenuHandler.Status.BUS_LIST_NEEDS_REFRESH);
         }
