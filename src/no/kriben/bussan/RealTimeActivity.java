@@ -64,6 +64,7 @@ public class RealTimeActivity extends SherlockListActivity {
 
                 ActionBar actionBar = getSupportActionBar();
                 actionBar.setTitle(busStopName);
+                actionBar.setDisplayHomeAsUpEnabled(true);
 
                 new DownloadBusDepartureTask(this).execute(busStopCode);
 

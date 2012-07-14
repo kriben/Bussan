@@ -91,6 +91,12 @@ public class BusStopMenuHandler {
             }
             return Status.BUS_LIST_NEEDS_REFRESH;
         }
+        else if (itemId == android.R.id.home) {
+            Intent intent = new Intent(activity, FrontpageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivity(intent);
+            return Status.OK;
+        }
         else if (itemId == R.id.show_in_map) {
             // Use trick from here to center on a position with a marker
             // http://stackoverflow.com/questions/2662531/launching-google-maps-directions-via-an-intent-on-android/4433117
