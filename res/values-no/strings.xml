@@ -5,6 +5,7 @@
     <string name="add_to_favorites">Legg til i Mine Busstopp</string>
     <string name="remove_from_favorites">Fjern fra Mine Busstopp</string>
     <string name="show_in_map">Vis i kart</string>
+    <string name="refresh">Oppdater</string>
     
     <string name="front_page_title">Bussan: Mine busstopp</string>
     <string name="all_bus_stops_title">Bussan: Alle busstopp</string>
