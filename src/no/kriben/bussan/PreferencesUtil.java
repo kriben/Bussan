@@ -13,7 +13,7 @@ public class PreferencesUtil {
 
         String[] parts = string.split(",");
         for (String part : parts) {
-            favorites.add(new Integer(part));
+            favorites.add(Integer.valueOf(part));
         }
         return favorites;
     }

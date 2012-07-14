@@ -11,7 +11,7 @@ public class BusStopNameFormatter {
         //   less than equal 1000 is leaving town
         //   larger than 2000 is unknown
         String direction = "";
-        int id = new Integer(busStop.getId()).intValue();
+        int id = Integer.valueOf(busStop.getId());
         if (id < 2000) {
             if (id < 1000)
                 direction = " (" + context.getString(R.string.from_town) + ")";
