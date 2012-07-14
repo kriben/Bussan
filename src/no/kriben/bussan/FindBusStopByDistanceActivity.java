@@ -8,6 +8,7 @@ import java.util.List;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.location.Criteria;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import no.kriben.busstopstrondheim.model.BusStop;
 import no.kriben.busstopstrondheim.model.Position;
 
@@ -64,11 +66,19 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
     protected void registerForLocationUpdates() {
         // Acquire a reference to the system Location Manager
         final LocationManager locationManager = (LocationManager) FindBusStopByDistanceActivity.this.getSystemService(Context.LOCATION_SERVICE);
+        
+        // Register the listener with the Location Manager to receive location updates
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        String provider = locationManager.getBestProvider(criteria, true);
+        if (provider == null) {
+            Toast.makeText(this, "Unable to get location provider.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         long MIN_TIME = 90000; // milliseconds
         float MIN_DISTANCE_MOVED = 50.0f; // meters
-        // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE_MOVED, locationListener_);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE_MOVED, locationListener_);
+        locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE_MOVED, locationListener_);
     }
 
     protected void onResume() {
