@@ -5,7 +5,7 @@
           android:title="@string/add_to_favorites"
           android:showAsAction="ifRoom" />
      <item android:id="@+id/remove_favorite"
-          android:icon="@drawable/ic_menu_star_filled"
+          android:icon="@drawable/ic_menu_star_solid"
           android:title="@string/remove_from_favorites"
           android:showAsAction="ifRoom" />
      <item android:id="@+id/show_in_map"
