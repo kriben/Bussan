@@ -14,36 +14,12 @@
                                 <category android:name="android.intent.category.LAUNCHER" />
                         </intent-filter>
                 </activity>
-                <activity android:name=".RealTimeActivity" android:label="Bussan: Bus stop">
-                        <intent-filter>
-                                <action android:name="android.intent.action.VIEW" />
-                                <category android:name="android.intent.category.DEFAULT" />
-                                <data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
-                        </intent-filter>
-                </activity>
+                <activity android:name=".RealTimeActivity" android:label="Bussan: Bus stop"/>
                 <activity android:name=".FindBusStopByNameActivity"
-                        android:label="Bussan: All bus stops">
-                        <intent-filter>
-                                <action android:name="android.intent.action.VIEW" />
-                                <category android:name="android.intent.category.DEFAULT" />
-                                <data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
-                        </intent-filter>
-                </activity>
+                        android:label="Bussan: All bus stops"/>
                 <activity android:name=".FindBusStopByDistanceActivity"
-                        android:label="Bussan: Closest bus stops">
-                        <intent-filter>
-                                <action android:name="android.intent.action.VIEW" />
-                                <category android:name="android.intent.category.DEFAULT" />
-                                <data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
-                        </intent-filter>
-                </activity>
+                        android:label="Bussan: Closest bus stops"/>
                 <activity android:name=".BusDepartureDetailActivity"
-                          android:label="Bussan: Bus Departure">
-                  <intent-filter>
-                    <action android:name="android.intent.action.VIEW" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                    <data android:mimeType="vnd.android.cursor.item/vnd.busdepature" />
-                  </intent-filter>
-                </activity>
+                          android:label="Bussan: Bus Departure"/>
         </application>
 </manifest>
