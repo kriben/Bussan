@@ -69,7 +69,10 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
         
         // Register the listener with the Location Manager to receive location updates
         Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setSpeedRequired(false);
         String provider = locationManager.getBestProvider(criteria, true);
         if (provider == null) {
             Toast.makeText(this, "Unable to get location provider.", Toast.LENGTH_SHORT).show();
