@@ -50,8 +50,9 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
 
     @Override
     protected void refreshBusStopListView(List<BusStop> busStops) {
-        adapter_ = new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops);
-        setListAdapter(adapter_);
-
+        if (busStops != null) {
+            adapter_ = new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops);
+            setListAdapter(adapter_);
+        }
     }
 }
