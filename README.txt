@@ -6,8 +6,8 @@ Small android app for displaying AtB's realtime bus data.
 See http://www.atb.no/aapne-data/category419.html for more information 
 (in Norwegian).
 
-The app is available for free here: https://market.android.com/details?id=no.kriben.bussan
-
+The app is available for free here:
+https://play.google.com/store/apps/details?id=no.kriben.bussan
 
 License
 =======
@@ -22,5 +22,6 @@ Dependencies
 ============
 
 The library uses:
-- BusStopsTrondheim https://github.com/kriben/BusStopsTrondheim/
+- BusStopsTrondheim: https://github.com/kriben/BusStopsTrondheim/
+- ActionBarSherlock: http://actionbarsherlock.com/
 - Android sdk level 8 (2.2).
