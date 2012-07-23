@@ -266,7 +266,6 @@ public class RealTimeActivity extends SherlockListActivity {
 
         public DownloadBusDepartureTask(RealTimeActivity activity) {
             super(activity);
-            //activity.getRefreshButton().setEnabled(false);
         }
 
         /** The system calls this to perform work in a worker thread and
