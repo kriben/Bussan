@@ -20,9 +20,9 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> implements BusStopArra
     }
 
     public BusStopAdapter(Context context,
-	    int resource,
-	    int textViewResourceId) {
-	super(context, resource, textViewResourceId);
+            int resource,
+            int textViewResourceId) {
+        super(context, resource, textViewResourceId);
     }
 
     @Override

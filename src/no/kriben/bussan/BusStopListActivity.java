@@ -141,15 +141,15 @@ public abstract class BusStopListActivity extends SherlockListActivity {
 
         /** The system calls this to perform work in the UI thread and delivers
          * the result from doInBackground() */
-	@Override
-	protected void onPostExecute(List<BusStop> busStops) {
-	    super.onPostExecute(busStops);
+        @Override
+        protected void onPostExecute(List<BusStop> busStops) {
+            super.onPostExecute(busStops);
 
-	    if (activity_ != null && progressDialog_ != null) {
-		progressDialog_.dismiss();
-		((BusStopListActivity) activity_).refreshBusStopListView(busStops);
-	    }
-	}
+            if (activity_ != null && progressDialog_ != null) {
+                progressDialog_.dismiss();
+                ((BusStopListActivity) activity_).refreshBusStopListView(busStops);
+            }
+        }
 
 
         @Override
