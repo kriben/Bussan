@@ -19,6 +19,12 @@ public class BusStopAdapter extends ArrayAdapter<BusStop> implements BusStopArra
         super(context, resource, textViewResourceId, objects);
     }
 
+    public BusStopAdapter(Context context,
+	    int resource,
+	    int textViewResourceId) {
+	super(context, resource, textViewResourceId);
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         BusStop busStop = getBusStop(position);

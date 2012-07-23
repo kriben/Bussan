@@ -20,9 +20,11 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (adapter_ != null) {
-                adapter_.getFilter().filter(s);
-                adapter_.notifyDataSetChanged();
+            synchronized(adapter_) {
+                if (adapter_ != null) {
+                    adapter_.getFilter().filter(s);
+                    adapter_.notifyDataSetChanged();
+                }
             }
         }
     };
@@ -31,6 +33,9 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.bus_stop_by_name_list);
         super.onCreate(savedInstanceState);
+
+        adapter_ = new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name);
+        setListAdapter(adapter_);
 
         filterText_ = (EditText) findViewById(R.id.search_box);
         filterText_.addTextChangedListener(filterTextWatcher);
@@ -50,9 +55,15 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
 
     @Override
     protected void refreshBusStopListView(List<BusStop> busStops) {
-        if (busStops != null) {
-            adapter_ = new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name, busStops);
-            setListAdapter(adapter_);
+        synchronized(adapter_) {
+            if (busStops != null) {
+                adapter_.setNotifyOnChange(false);
+                adapter_.clear();
+                for (BusStop b : busStops) {
+                    adapter_.add(b);
+                }
+                adapter_.notifyDataSetChanged();
+            }
         }
     }
 }
