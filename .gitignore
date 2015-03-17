@@ -2,4 +2,16 @@ bin/*
 gen/*
 *~
 *.class
-res/values/atb.xml
+app/src/main/res/values/atb.xml
+app/lint.xml
+
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/app/build
+.idea/workspace.xml
+.idea/tasks.xml
+import-summary.txt
