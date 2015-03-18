@@ -37,9 +37,6 @@ public class AndroidFileStringCache implements StringCache {
             saveFileTimeStamp(System.currentTimeMillis());
 
             System.out.println("WROTE TO DATA CACHE");
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
