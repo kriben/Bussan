@@ -14,7 +14,7 @@
 
     <string name="favorite_title">Mine Busstopp</string>
     <string name="finding_bus_stops">Finner busstopp.</string>
-    <string name="please_wait">Vennligst vent...</string>
+    <string name="please_wait">Vennligst vent…</string>
     <string name="added">La</string>
     <string name="removed">Fjernet</string>
     <string name="to_favorites">til i Mine Busstopp.</string>
