@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -165,13 +167,13 @@ public class RealTimeActivity extends ActionBarListActivity {
         rotation.setRepeatCount(Animation.INFINITE);
         imageView.startAnimation(rotation);
         
-        refreshItem.setActionView(imageView);
+        MenuItemCompat.setActionView(refreshItem_, imageView);
     }
 
     public void stopRefreshAnimation() {
-        if (refreshItem_ != null && refreshItem_.getActionView() != null) {
-            refreshItem_.getActionView().clearAnimation();
-            refreshItem_.setActionView(null);
+        if (refreshItem_ != null && MenuItemCompat.getActionView(refreshItem_) != null) {
+            MenuItemCompat.getActionView(refreshItem_).clearAnimation();
+            MenuItemCompat.setActionView(refreshItem_, null);
         }
     }
 
