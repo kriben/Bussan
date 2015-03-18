@@ -31,8 +31,9 @@ public class FindBusStopByNameActivity extends BusStopListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.bus_stop_by_name_list);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.bus_stop_by_name_list);
+        registerOnClickListener();
 
         adapter_ = new BusStopAdapter(getBaseContext(), R.layout.bus_stop_list_item, R.id.busstop_name);
         setListAdapter(adapter_);

@@ -1,12 +1,13 @@
 package no.kriben.bussan;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.ActionBar;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
 
-public class BusDepartureDetailActivity extends SherlockActivity {
+
+public class BusDepartureDetailActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

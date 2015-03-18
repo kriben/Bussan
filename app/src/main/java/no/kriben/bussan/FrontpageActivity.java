@@ -1,22 +1,24 @@
 package no.kriben.bussan;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import no.kriben.busstopstrondheim.model.BusStop;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 public class FrontpageActivity extends BusStopListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.frontpage);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.frontpage);
+        registerOnClickListener();
 
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
@@ -57,7 +59,7 @@ public class FrontpageActivity extends BusStopListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getSupportMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.frontpagemenu, menu);
         return true;
     }

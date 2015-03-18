@@ -5,6 +5,7 @@ import java.util.List;
 import no.kriben.busstopstrondheim.io.BusStopRepository;
 import no.kriben.busstopstrondheim.io.ProgressHandler;
 import no.kriben.busstopstrondheim.model.BusStop;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,15 +16,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import com.actionbarsherlock.app.SherlockListActivity;
 
 
 
-public abstract class BusStopListActivity extends SherlockListActivity {
+public abstract class BusStopListActivity extends ActionBarListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    public void registerOnClickListener() {
         ListView lv = getListView();
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

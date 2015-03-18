@@ -28,8 +28,9 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.bus_stop_by_distance_list);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.bus_stop_by_distance_list);
+        registerOnClickListener();
 
         startDownloadBusStopTask();
     }
@@ -195,7 +196,7 @@ public class FindBusStopByDistanceActivity extends BusStopListActivity {
         private List<BusStop> locations_;
         private ProgressDialog progressDialog_;
 
-        public FindClosestTask(ListActivity activity, List<BusStop> locations) {
+        public FindClosestTask(ActionBarListActivity activity, List<BusStop> locations) {
             super(activity);
             locations_ = locations;
         }

@@ -35,16 +35,16 @@ public class BusStopMenuHandler {
     }
     
     // TODO: duplicated code ===> remove
-    public void configureMenu(Activity activity, com.actionbarsherlock.view.Menu menu, BusStop busStop, boolean showRefresh) {
+    public void configureMenu(Activity activity, Menu menu, BusStop busStop, boolean showRefresh) {
         List<Integer> favorites = getSavedFavoriteBusStops(activity);
         boolean isFavorite = favorites.contains(busStop.getCode());
-        com.actionbarsherlock.view.MenuItem addItem = menu.findItem(R.id.add_favorite);
+        MenuItem addItem = menu.findItem(R.id.add_favorite);
         addItem.setVisible(false);
         
-        com.actionbarsherlock.view.MenuItem removeItem = menu.findItem(R.id.remove_favorite);
+        MenuItem removeItem = menu.findItem(R.id.remove_favorite);
         removeItem.setVisible(false);
 
-        com.actionbarsherlock.view.MenuItem toggleItem = menu.findItem(R.id.toggle_favorite);
+        MenuItem toggleItem = menu.findItem(R.id.toggle_favorite);
         if (isFavorite) {
             toggleItem.setIcon(R.drawable.ic_menu_star_solid);
             toggleItem.setTitle(activity.getString(R.string.remove_from_favorites));
@@ -54,22 +54,18 @@ public class BusStopMenuHandler {
             toggleItem.setTitle(activity.getString(R.string.add_to_favorites));
         }
 
-        com.actionbarsherlock.view.MenuItem showInMapItem = menu.findItem(R.id.show_in_map);
+        MenuItem showInMapItem = menu.findItem(R.id.show_in_map);
         showInMapItem.setVisible(true);
         
-        com.actionbarsherlock.view.MenuItem refreshItem = menu.findItem(R.id.refresh);
+        MenuItem refreshItem = menu.findItem(R.id.refresh);
         refreshItem.setVisible(showRefresh);
-    }
-    
-    public Status handleContextItemSelected(Activity activity, com.actionbarsherlock.view.MenuItem item, BusStop busStop) {
-        int itemId = item.getItemId();
-        return handleItemSelected(activity, itemId, busStop);
     }
     
     public Status handleContextItemSelected(Activity activity, MenuItem item, BusStop busStop) {
         int itemId = item.getItemId();
         return handleItemSelected(activity, itemId, busStop);
     }
+
     
     private Status handleItemSelected(Activity activity, int itemId, BusStop busStop) {
         if (itemId == R.id.add_favorite) {

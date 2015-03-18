@@ -1,11 +1,5 @@
 package no.kriben.bussan;
 
-import java.util.List;
-
-import no.kriben.busstopstrondheim.io.BusDepartureRepository;
-import no.kriben.busstopstrondheim.model.BusDeparture;
-import no.kriben.busstopstrondheim.model.BusStop;
-import no.kriben.busstopstrondheim.model.Position;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,6 +9,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -25,16 +20,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.support.v7.app.ActionBar;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockListActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import java.util.List;
+
+import no.kriben.busstopstrondheim.io.BusDepartureRepository;
+import no.kriben.busstopstrondheim.model.BusDeparture;
+import no.kriben.busstopstrondheim.model.BusStop;
+import no.kriben.busstopstrondheim.model.Position;
+
+import android.view.Menu;
+import android.view.MenuItem;
 
 
 
-public class RealTimeActivity extends SherlockListActivity {
+public class RealTimeActivity extends ActionBarListActivity {
 
     private BusStop busStop_ = null;
     private MenuItem refreshItem_ = null;
@@ -42,8 +42,9 @@ public class RealTimeActivity extends SherlockListActivity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.bus_departure_list);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.bus_departure_list);
+
         // first, check connectivity
         if (ConnectivityChecker.isOnline(this)) {
             // do things if it there's network connection
@@ -119,7 +120,7 @@ public class RealTimeActivity extends SherlockListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         //menu.setHeaderTitle("Menu"); // TODO: get the name of the bus stop here
-        MenuInflater inflater = getSupportMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.busstopmenu, menu);
 
         new BusStopMenuHandler().configureMenu(this, menu, busStop_, true);

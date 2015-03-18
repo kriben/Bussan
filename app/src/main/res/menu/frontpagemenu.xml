@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/find_by_name" android:icon="@drawable/ic_menu_search" android:titleCondensed="@string/find_by_name" android:id="@+id/find_by_name" android:showAsAction="ifRoom"></item>
-    <item android:title="@string/find_closest"  android:icon="@drawable/ic_menu_mylocation" android:titleCondensed="@string/find_closest" android:id="@+id/find_closest" android:showAsAction="ifRoom"></item>
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="@string/find_by_name" android:icon="@drawable/ic_menu_search" android:titleCondensed="@string/find_by_name" android:id="@+id/find_by_name" app:showAsAction="ifRoom"></item>
+    <item android:title="@string/find_closest"  android:icon="@drawable/ic_menu_mylocation" android:titleCondensed="@string/find_closest" android:id="@+id/find_closest" app:showAsAction="ifRoom"></item>
 </menu>
