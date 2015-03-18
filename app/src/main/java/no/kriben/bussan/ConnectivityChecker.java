@@ -10,8 +10,6 @@ public class ConnectivityChecker {
         if (cm == null)
             return false;
         NetworkInfo info = cm.getActiveNetworkInfo();
-        if (info == null)
-            return false;
-        return info.isConnectedOrConnecting();
+        return info != null && info.isConnectedOrConnecting();
     }
 }
