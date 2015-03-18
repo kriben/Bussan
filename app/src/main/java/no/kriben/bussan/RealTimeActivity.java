@@ -186,17 +186,15 @@ public class RealTimeActivity extends ActionBarListActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
             if (null == convertView){
                 LayoutInflater mInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
                 convertView = mInflater.inflate(R.layout.bus_departure_list_item, null);
-                holder = new ViewHolder(convertView);
-                convertView.setTag(holder);
+                convertView.setTag(new ViewHolder(convertView));
             }
 
             BusDeparture departure = getItem(position);
 
-            holder = (ViewHolder) convertView.getTag();
+            ViewHolder holder = (ViewHolder) convertView.getTag();
             TextView line = holder.getLine();
             line.setText(departure.getLine());
 
