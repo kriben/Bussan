@@ -114,8 +114,7 @@ public abstract class BusStopListActivity extends ActionBarListActivity {
 
             BusStopRepository busStopRepository = ((BussanApplication)getApplicationContext()).getBusStopRepository();
             //AsyncTaskProgressHandler progressHandler = new AsyncTaskProgressHandler();
-            List<BusStop> busStops = busStopRepository.getAll(this);
-            return busStops;
+            return busStopRepository.getAll(this);
         }
 
 

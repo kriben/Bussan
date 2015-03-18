@@ -272,8 +272,7 @@ public class RealTimeActivity extends ActionBarListActivity {
          * delivers it the parameters given to AsyncTask.execute() */
         protected List<BusDeparture> doInBackground(Integer... codes) {
             BusDepartureRepository busDepartureRepository = ((BussanApplication)getApplicationContext()).getBusDepartureRepository();
-            List<BusDeparture> busDepartures = busDepartureRepository.getAllForBusStop(codes[0]);
-            return busDepartures;
+            return busDepartureRepository.getAllForBusStop(codes[0]);
         }
 
         /** The system calls this to perform work in the UI thread and delivers
