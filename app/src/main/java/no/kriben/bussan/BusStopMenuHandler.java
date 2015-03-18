@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class BusStopMenuHandler {
-    public enum Status { OK, FAILED, NOT_HANDLED, BUS_LIST_NEEDS_REFRESH };
+    public enum Status { OK, FAILED, NOT_HANDLED, BUS_LIST_NEEDS_REFRESH }
 
     public void configureMenu(Activity activity, Menu menu, BusStop busStop) {
         List<Integer> favorites = getSavedFavoriteBusStops(activity);
